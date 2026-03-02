@@ -1,0 +1,66 @@
+{{#> base title="Orders | OmniLabs Ghana" bodyClass="dashboard-layout pattern-bg" }}
+
+{{> sidebar activeLink="orders" }}
+
+<!-- Main Content -->
+<main class="main-content">
+    <header class="top-bar">
+        <div class="db-title">
+            <h2 class="top-bar-title">Orders</h2>
+            <p style="color: var(--slate); font-size: 0.9rem; margin-top: 0.5rem;">Orders generated and closed by Omni
+                over WhatsApp and Web.</p>
+        </div>
+        <div class="db-actions">
+            <button class="btn btn-outline btn-sm">Export CSV</button>
+            <div class="user-profile">
+                <div class="avatar">AD</div>
+            </div>
+        </div>
+    </header>
+
+    <div class="data-table-wrapper">
+        <div class="panel-header" style="padding: 1.5rem; border-bottom: 1px solid rgba(138, 147, 163, 0.2);">
+            <h3 style="font-size: 1.1rem; font-weight: 700;">Recent Transactions</h3>
+        </div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Total</th>
+                    <th>Source</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>#ORD-8901</strong></td>
+                    <td>Kwame Mensah</td>
+                    <td>Today, 10:42 AM</td>
+                    <td><span class="badge badge-success">Paid</span></td>
+                    <td>$350.00</td>
+                    <td>WhatsApp</td>
+                </tr>
+                <tr>
+                    <td><strong>#ORD-8900</strong></td>
+                    <td>Ama Sarpong</td>
+                    <td>Today, 09:15 AM</td>
+                    <td><span class="badge badge-coral">Pending</span></td>
+                    <td>$120.00</td>
+                    <td>Web Chat</td>
+                </tr>
+                <tr>
+                    <td><strong>#ORD-8899</strong></td>
+                    <td>John Doe</td>
+                    <td>Yesterday, 4:20 PM</td>
+                    <td><span class="badge badge-success">Paid</span></td>
+                    <td>$1,500.00</td>
+                    <td>WhatsApp</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</main>
+
+{{/base}}
