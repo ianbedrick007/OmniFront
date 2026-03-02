@@ -1,39 +1,65 @@
-{{#> base title="AI Chat | OmniLabs Ghana" bodyClass="dashboard-layout pattern-bg" }}
-
-{{> sidebar activeLink="chats" }}
-
-<!-- Main Content -->
-<main class="main-content">
-    <header class="top-bar">
-        <div class="db-title">
-            <h2 class="top-bar-title">AI Chat Interface</h2>
-        </div>
-        <div class="user-profile">
-            <div class="avatar">AD</div>
-        </div>
-    </header>
-
-    <div class="chat-window">
-        <div class="chat-header">
-            <h3>Talk to Omni E2E Assistant</h3>
-            <span class="badge badge-success">Online</span>
-        </div>
-        <div class="chat-messages" id="chat-messages">
-            <div class="message ai">
-                <div class="message-bubble">
-                    Hello! I am Omni, your AI employee. I can manage inventory, process Paystack payments, and
-                    handle customer service directly over WhatsApp or Web. How can I help you today?
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Chat | OmniLabs Ghana</title>
+    <!-- Extra head elements if passed -->
+    
+  <link rel="stylesheet" crossorigin href="/assets/main-CMsk4vwF.css">
+</head>
+<body class="dashboard-body">
+    
+        <div class="dashboard-container">
+            <!-- Navigation Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <img src="./logo-circle.png" alt="Omni Logo" class="sidebar-logo">
                 </div>
-            </div>
+                <nav class="sidebar-nav">
+                    <a href="dashboard.html"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+                    <a href="#"><i class="fas fa-comment-dots"></i><span>Conversations</span></a>
+                    <a href="products.html"><i class="fas fa-box"></i><span>Products</span></a>
+                    <a href="orders.html"><i class="fas fa-shopping-cart"></i><span>Orders</span></a>
+                    <a href="#"><i class="fas fa-credit-card"></i><span>Payments</span></a>
+                    <a href="chat.html" class="active"><i class="fas fa-robot"></i><span>AI Chat</span></a>
+                </nav>
+                <div class="sidebar-footer">
+                    <a href="#" title="Settings"><i class="fas fa-cog"></i></a>
+                    <div class="user-avatar" title="User Profile">AD</div>
+                </div>
+            </aside>
+    
+            <!-- Main Content -->
+            <main class="dashboard-main">
+                <header class="db-header">
+                    <div class="db-title">
+                        <h1>AI Chat Interface</h1>
+                    </div>
+                    <div class="db-user">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                </header>
+    
+                <div class="db-panel active-chat-panel chat-flex-container">
+                    <div class="panel-header">
+                        <h3>Talk to Omni E2E Assistant</h3>
+                        <span class="badge badge-success">Online</span>
+                    </div>
+                    <div class="chat-window-body chat-flex-body">
+                        <div class="chat-bubble received">
+                            Hello! I am Omni, your AI employee. I can manage inventory, process Paystack payments, and
+                            handle customer service directly over WhatsApp or Web. How can I help you today?
+                        </div>
+                    </div>
+                    <div class="chat-window-footer">
+                        <input type="text" placeholder="Prompt Omni to create an order, analyze sales, etc..."
+                            aria-label="Message Input">
+                        <button class="btn btn-primary" title="Send Message"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </main>
         </div>
-        <div class="chat-input-area">
-            <input type="text" placeholder="Prompt Omni to create an order, analyze sales, etc..." class="chat-input"
-                id="chat-input">
-            <button class="btn btn-primary">Send</button>
-        </div>
-    </div>
-</main>
-
-<script type="module" src="js/chat.js"></script>
-
-{{/base}}
+    
+</body>
+</html>

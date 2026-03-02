@@ -1,61 +1,71 @@
-// OmniLabs Ghana - Main Logic
-document.addEventListener('DOMContentLoaded', () => {
-    const header = document.getElementById('main-header');
-    const normalNav = document.getElementById('nav-container-normal');
-    const scrolledNav = document.getElementById('nav-container-scrolled');
-    const sections = document.querySelectorAll('section');
+// Scroll Spy & Navbar Active State
+export function initScrollSpy() {
+    const sections = document.querySelectorAll('section[id]');
     const navItems = document.querySelectorAll('.nav-item');
+    const header = document.getElementById('main-header');
 
-    // Header scroll effect
     window.addEventListener('scroll', () => {
+        // Handle Header Background/Visibility
         if (window.scrollY > 100) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
-    });
 
-    // Intersection Observer to highlight active section in scrolled nav
+        // Handle Scroll Spy (Section Highlighting)
+        let current = '';
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            if (window.pageYOffset >= sectionTop - 150) {
+                current = section.getAttribute('id');
+            }
+        });
+
+        navItems.forEach(item => {
+            item.classList.remove('active');
+            const target = item.getAttribute('data-target');
+            if (target === current) {
+                item.classList.add('active');
+            }
+        });
+    });
+}
+
+// Intersection Observer for fade-in effects
+export function initAnimations() {
     const observerOptions = {
-        root: null,
-        rootMargin: '-50% 0px -50% 0px',
-        threshold: 0
+        threshold: 0.1
     };
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                const id = entry.target.getAttribute('id');
-                navItems.forEach(item => {
-                    item.classList.remove('active');
-                    if (item.getAttribute('data-target') === id) {
-                        item.classList.add('active');
-                    }
-                });
+                entry.target.classList.add('fade-in');
             }
         });
     }, observerOptions);
 
-    sections.forEach(section => {
-        observer.observe(section);
+    document.querySelectorAll('.card, section h2, section p, .hero-logo').forEach(el => {
+        el.style.opacity = "0";
+        observer.observe(el);
     });
+}
 
-    // Fetch user location and update pricing to Cedis if in Ghana
-    fetch('https://get.geojs.io/v1/ip/country.json')
-        .then(response => response.json())
-        .then(data => {
-            if (data.country === 'GH' || data.name === 'Ghana') {
-                const currencySymbols = document.querySelectorAll('.currency-symbol');
-                const priceAmounts = document.querySelectorAll('.price-amount');
+// Micro-interactions for depth layering (iOS style)
+export function initParallax() {
+    document.addEventListener('mousemove', (e) => {
+        const moveX = (e.clientX - window.innerWidth / 2) * 0.01;
+        const moveY = (e.clientY - window.innerHeight / 2) * 0.01;
 
-                currencySymbols.forEach(symbol => symbol.textContent = 'GH₵');
-                priceAmounts.forEach(value => {
-                    const ghsPrice = value.getAttribute('data-ghs');
-                    if (ghsPrice) {
-                        value.textContent = ghsPrice;
-                    }
-                });
-            }
-        })
-        .catch(error => console.error('Error fetching location:', error));
+        document.querySelectorAll('.floating-card').forEach(card => {
+            card.style.transform = `translate(${moveX}px, ${moveY}px) translateY(-5px)`;
+        });
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initScrollSpy();
+    initAnimations();
+    initParallax();
 });
