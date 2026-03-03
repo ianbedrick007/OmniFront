@@ -64,8 +64,33 @@ export function initParallax() {
     });
 }
 
+// Mobile Navigation Toggle
+export function initMobileNav() {
+    const toggleButton = document.querySelector('.mobile-nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (!toggleButton || !navLinks) return;
+
+    toggleButton.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        toggleButton.classList.toggle('active');
+        // Prevent body scroll when menu is open for better UX
+        document.body.style.overflow = navLinks.classList.contains('active') ? 'hidden' : '';
+    });
+
+    // Close menu when a nav link is clicked
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+            toggleButton.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initScrollSpy();
     initAnimations();
     initParallax();
+    initMobileNav();
 });
