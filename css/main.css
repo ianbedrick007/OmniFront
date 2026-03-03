@@ -19,7 +19,7 @@
     --font-heading: 'Courier New', Courier, monospace;
     --font-body: 'Courier New', Courier, monospace;
     --font-mono: 'Courier New', Courier, monospace;
-    --header-height: 80px;
+    --header-height: 56px;
     --sidebar-width: 280px;
 }
 
@@ -147,11 +147,11 @@ li,
     z-index: 2000;
     /* Ensure header is above everything */
     transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    padding: 1rem 0;
+    padding: 0.7rem 0;
 }
 
 #main-header.scrolled {
-    padding: 1rem 0;
+    padding: 0.7rem 0;
 }
 
 #main-header .nav-container {

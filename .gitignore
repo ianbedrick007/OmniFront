@@ -1,6 +1,5 @@
 # Build artifacts
-dist/
-dist-ssr/
+
 *.zip
 
 # Dependencies
