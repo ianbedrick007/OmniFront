@@ -1,6 +1,9 @@
 # Build artifacts
 
 *.zip
+*.py
+venv/
+__pycache__/
 
 # Dependencies
 node_modules/
