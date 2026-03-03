@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Omni AI Assistant | Chat System</title>
+    <!-- Extra head elements if passed -->
+    
+  <link rel="stylesheet" crossorigin href="/assets/main-CMsk4vwF-CMsk4vwF.css">
+</head>
+<body class="dashboard-layout pattern-bg">
+    
+    
+    <!-- Sidebar (Reused layout context) -->
+    <aside class="sidebar">
+        <a href="index.html" class="logo">
+            <img src="/assets/transp%20background%201_%20omni-W1j1-CAI.png" alt="OmniLabs Logo"
+                style="height: 28px; width: 28px; object-fit: contain; border-radius: 4px;">
+            Omni<span>Labs</span>
+        </a>
+    
+        <button class="btn btn-primary" style="margin-bottom: 2rem; width: 100%;">+ New Conversation</button>
+    
+        <div
+            style="font-size:0.75rem; text-transform:uppercase; color: var(--slate); letter-spacing:1px; margin-bottom: 1rem;">
+            Recent Chats</div>
+        <nav class="sidebar-nav">
+            <a href="#" class="sidebar-link active"
+                style="font-weight: 400; font-size: 0.95rem; border:none; padding: 0.6rem 1rem;">
+                Generate Influencer Persona
+            </a>
+            <a href="#" class="sidebar-link"
+                style="font-weight: 400; font-size: 0.95rem; border:none; padding: 0.6rem 1rem;">
+                Supply Chain Analysis
+            </a>
+            <a href="#" class="sidebar-link"
+                style="font-weight: 400; font-size: 0.95rem; border:none; padding: 0.6rem 1rem;">
+                Translate Script to Twi
+            </a>
+            <a href="#" class="sidebar-link"
+                style="font-weight: 400; font-size: 0.95rem; border:none; padding: 0.6rem 1rem;">
+                Q3 Marketing Copy
+            </a>
+        </nav>
+    </aside>
+    
+    <!-- Chat Window -->
+    <main class="main-content" style="padding: 2rem;">
+        <div style="display:flex; align-items:center; gap:1rem; margin-bottom: 2rem;">
+            <button onclick="toggleSidebar()" class="btn btn-outline" style="display: none; border:none; padding: 0.5rem;"
+                id="menu-btn">☰</button>
+            <h2 style="font-size: 1.5rem; margin: 0;">Generate Influencer Persona</h2>
+        </div>
+    
+        <div class="chat-window">
+            <!-- Header -->
+            <div class="chat-header">
+                <div style="display: flex; align-items: center; gap: 0.75rem;">
+                    <div class="message-avatar ai" style="width: 32px; height: 32px; font-size:0.8rem;">OI</div>
+                    <div>
+                        <div style="font-weight:600; font-size: 0.95rem;">Omni-Instruct v2</div>
+                        <div class="tech-font" style="font-size:0.75rem; color: #10B981;">● Online</div>
+                    </div>
+                </div>
+                <div>
+                    <button class="btn btn-outline" style="padding: 0.5rem 1rem; font-size:0.875rem;">Model
+                        Params</button>
+                </div>
+            </div>
+    
+            <!-- Messages Area -->
+            <div class="chat-messages">
+                <!-- Date Marker -->
+                <div style="text-align: center; font-size: 0.75rem; color: var(--slate); font-weight: 600;">TODAY 10:24
+                    AM</div>
+    
+                <!-- User Bubble -->
+                <div class="message user">
+                    <div class="message-avatar user">U</div>
+                    <div>
+                        <div class="message-bubble">
+                            Can you generate a detailed character background for a new AI Influencer? She should be a
+                            24-year-old fashion enthusiast from Accra who blends traditional Kente motifs with
+                            futuristic cyberpunk streetwear.
+                        </div>
+                        <div class="message-time">10:24 AM</div>
+                    </div>
+                </div>
+    
+                <!-- AI Bubble -->
+                <div class="message ai">
+                    <div class="message-avatar ai">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#00D1C1" />
+                            <path d="M2 17L12 22L22 17" stroke="#00D1C1" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M2 12L12 17L22 12" stroke="#00D1C1" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="message-bubble" style="border-left: 3px solid var(--digital-teal);">
+                            <p class="mb-2">Absolutely. Here is a conceptual background for your new virtual creator:
+                            </p>
+    
+                            <h4 class="mb-1" style="color: var(--circuit-indigo);">Profile Data: Adjoa "Neon" Mensah
+                            </h4>
+                            <p class="mb-2"><strong>Age:</strong> 24</p>
+                            <p class="mb-2"><strong>Location:</strong> Neo-Accra (Digital Realm)</p>
+                            <p class="mb-2"><strong>Niche:</strong> Hyper-Fashion, Tech-Wear, Cultural Heritage</p>
+    
+                            <h4 class="mb-1" style="color: var(--circuit-indigo);">Backstory & Vibe</h4>
+                            <p class="mb-2">Adjoa represents the intersection of history and tomorrow. Growing up
+                                watching her grandmother weave traditional Kente, she developed an appreciation for
+                                geometric storytelling. In the virtual space, she translates those ancient patterns into
+                                bioluminescent thread algorithms.</p>
+                            <p>Her signature look involves over-sized, structural jackets made from "smart-kente" that
+                                dynamically changes colors based on the engagement metrics of her live streams.</p>
+    
+                            <div class="tech-metrics mt-4">
+                                tag_generation: ['#NeoKente', '#AfroCyberpunk', '#AfricanDigitalArt']
+                            </div>
+                        </div>
+                        <div class="message-time">10:25 AM</div>
+                    </div>
+                </div>
+    
+                <!-- User Bubble -->
+                <div class="message user">
+                    <div class="message-avatar user">U</div>
+                    <div>
+                        <div class="message-bubble">
+                            That's incredible! Can you output a JSON config file parameter for her personality engine so
+                            we can test it in the studio?
+                        </div>
+                        <div class="message-time">10:28 AM</div>
+                    </div>
+                </div>
+    
+                <!-- AI Bubble -->
+                <div class="message ai">
+                    <div class="message-avatar ai">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="#00D1C1" />
+                            <path d="M2 17L12 22L22 17" stroke="#00D1C1" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M2 12L12 17L22 12" stroke="#00D1C1" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="message-bubble" style="border-left: 3px solid var(--digital-teal);">
+                            <p class="mb-2">Sure, here is the compiled JSON config for the Omni-Persona Engine:</p>
+                            <pre
+                                style="background: var(--graphite); color: white; padding: 1rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.85rem; overflow-x: auto;"><code>{
+      "persona_id": "adjoa_neon_01",
+      "base_model": "omni-creator-v3",
+      "traits": {
+        "creativity": 0.95,
+        "cultural_knowledge_base": "gh_traditions_v2",
+        "tone": "confident, visionary, approachable",
+        "slang_dictionary": [
+          "chale", "vibes", "level up", "pure aesthetics"
+        ]
+      },
+      "visual_style": {
+        "primary_motif": "cyber-kente",
+        "color_palette": ["neon_gold", "digital_teal", "circuit_indigo"]
+      }
+    }</code></pre>
+                        </div>
+                        <div class="message-time">10:29 AM</div>
+                    </div>
+                </div>
+    
+            </div>
+    
+            <!-- Input Area -->
+            <div class="chat-input-area">
+                <button class="btn btn-outline"
+                    style="padding: 0 1rem; border-radius: 4px; border:none; color:var(--slate);">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path
+                            d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48" />
+                    </svg>
+                </button>
+                <input type="text" class="chat-input" placeholder="Message Omni-Instruct v2...">
+                <button class="btn btn-primary" style="padding: 0 1.5rem; border-radius:4px;">
+                    Send
+                </button>
+            </div>
+    
+        </div>
+    </main>
+    
+    
+</body>
+</html>
