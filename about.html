@@ -1,0 +1,132 @@
+<!DOCTYPE html><html class="dark" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>About | OmniLabs AI Solutions</title>
+<link rel="icon" href="media/favicon.png" type="image/png">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Outfit:wght@500;600&amp;family=Space+Mono:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary": "#46eedd",
+                    "primary-container": "#00d1c1",
+                    "surface": "#0e1514",
+                    "on-surface-variant": "#bacac6"
+            },
+            "fontFamily": {
+                    "h1": ["Outfit"],
+                    "body-main": ["Inter"],
+                    "mono": ["Space Mono"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+    body { background-color: #000000; color: #dce4e2; scroll-behavior: smooth; }
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .fade-in { opacity: 0; transform: translateY(20px); animation: fadeIn 0.8s forwards; }
+    @keyframes fadeIn { to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body class="font-body-main">
+<!-- Navbar -->
+<nav class="fixed top-0 w-full z-50 bg-black/60 backdrop-blur-lg border-b border-white/10 flex justify-between items-center px-8 py-4">
+    <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-3 no-underline">
+            <img alt="OmniLabs Logo" class="h-8 w-8 object-contain" src="media/omni%20face_upscayl_5x_upscayl-standard-4x.png">
+            <span class="text-xl font-bold text-white font-h1">OmniLabs</span>
+        </a>
+    </div>
+    <div class="hidden md:flex gap-8 items-center">
+        <a class="font-mono text-sm uppercase tracking-widest text-white/70 hover:text-primary transition-colors" href="index.html">Home</a>
+        <a class="font-mono text-sm uppercase tracking-widest text-primary border-b border-primary pb-1" href="#">About</a>
+    </div>
+    <a href="https://ai.omnilabsghana.tech" class="bg-primary text-on-primary font-mono text-xs px-6 py-2 uppercase tracking-wider active:scale-95 duration-200 no-underline rounded-sm">Log In</a>
+</nav>
+
+<main class="pt-32 pb-24 px-8 max-w-4xl mx-auto space-y-20">
+    <!-- Hero -->
+    <section class="text-center fade-in">
+        <div class="inline-block px-3 py-1 border border-primary/30 bg-primary/10 rounded-full mb-6">
+            <span class="font-mono text-[10px] text-primary uppercase tracking-widest">The Company</span>
+        </div>
+        <h1 class="font-h1 text-5xl md:text-6xl text-white mb-8">Building the Future of <span class="text-primary">African Commerce.</span></h1>
+        <p class="text-xl text-on-surface-variant leading-relaxed">OmniLabs AI Solutions is a Ghanaian technology startup building AI-powered business automation tools for small and medium enterprises (SMEs).</p>
+    </section>
+
+    <!-- Mission -->
+    <section class="glass-panel p-10 rounded-[32px] fade-in" style="animation-delay: 0.2s">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="font-h2 text-3xl text-white mb-6">Our Mission</h2>
+                <p class="text-on-surface-variant leading-relaxed mb-6">In Africa, small businesses are the backbone of the economy. However, many struggle to provide 24/7 customer engagement and seamless payment processing.</p>
+                <p class="text-on-surface-variant leading-relaxed">We build "Always Awake" AI assistants that live where your customers are—on WhatsApp and Voice—enabling merchants to scale without limits.</p>
+            </div>
+            <div class="relative">
+                <div class="aspect-square bg-primary/5 rounded-3xl flex items-center justify-center border border-white/5">
+                    <span class="material-symbols-outlined text-[120px] text-primary/20">hub</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Now? -->
+    <section class="space-y-12 fade-in" style="animation-delay: 0.3s">
+        <div class="text-center max-w-2xl mx-auto">
+            <h2 class="font-h1 text-4xl text-white mb-4">Why Now?</h2>
+            <p class="text-on-surface-variant">The African commerce landscape is undergoing a digital revolution. OmniLabs is at the intersection of three massive shifts.</p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-6">
+            <div class="p-8 bg-white/5 rounded-2xl border border-white/5 hover:border-primary/20 transition-colors">
+                <div class="text-primary mb-4">
+                    <span class="material-symbols-outlined text-3xl">chat</span>
+                </div>
+                <h4 class="text-white font-bold mb-2">WhatsApp Ubiquity</h4>
+                <p class="text-sm text-on-surface-variant">Commerce in Ghana has moved from physical stores to WhatsApp. We provide the intelligence to manage this scale.</p>
+            </div>
+            <div class="p-8 bg-white/5 rounded-2xl border border-white/5 hover:border-primary/20 transition-colors">
+                <div class="text-primary mb-4">
+                    <span class="material-symbols-outlined text-3xl">payments</span>
+                </div>
+                <h4 class="text-white font-bold mb-2">The Momo Revolution</h4>
+                <p class="text-sm text-on-surface-variant">Mobile money has solved the payment problem. AI is now solving the "order taking" bottleneck.</p>
+            </div>
+            <div class="p-8 bg-white/5 rounded-2xl border border-white/5 hover:border-primary/20 transition-colors">
+                <div class="text-primary mb-4">
+                    <span class="material-symbols-outlined text-3xl">trending_up</span>
+                </div>
+                <h4 class="text-white font-bold mb-2">SME Scalability</h4>
+                <p class="text-sm text-on-surface-variant">Local businesses are ready to grow beyond their borders. AI allows them to act like enterprises with minimal overhead.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Details -->
+    <section class="grid md:grid-cols-2 gap-8 fade-in" style="animation-delay: 0.4s">
+        <div class="glass-panel p-8 rounded-2xl">
+            <h3 class="font-h1 text-xl text-white mb-4">Location</h3>
+            <p class="text-on-surface-variant">Headquartered in Accra, Ghana. We are proud to be building solutions designed specifically for the unique needs of the African market.</p>
+        </div>
+        <div class="glass-panel p-8 rounded-2xl">
+            <h3 class="font-h1 text-xl text-white mb-4">Contact</h3>
+            <p class="text-on-surface-variant">hi@omnilabsghana.tech</p>
+            <p class="text-on-surface-variant">0264022355</p>
+        </div>
+    </section>
+</main>
+
+<footer class="bg-black border-t border-white/5 w-full py-12">
+    <div class="max-w-7xl mx-auto px-8 text-center">
+        <p class="font-mono text-[10px] text-white/40 uppercase tracking-widest">© 2024 OmniLabs AI Solutions. Made with ❤️ in Ghana</p>
+    </div>
+</footer>
+</body></html>
