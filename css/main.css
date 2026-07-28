@@ -16,7 +16,7 @@
     --error: #ef4444;
     --border-light: rgba(255, 255, 255, 0.1);
     --border-dark: rgba(0, 0, 0, 0.05);
-    --font-heading: 'Outfit', sans-serif;
+    --font-heading: 'Inter', sans-serif;
     --font-body: 'Inter', sans-serif;
     --font-mono: 'Space Mono', monospace;
     --header-height: 72px;
@@ -753,9 +753,9 @@ body.monochrome-theme {
     --brand-primary: #000000;
     --digital-teal: #000000;
     --brand-secondary: #000000;
-    --font-heading: 'Courier New', Courier, monospace;
-    --font-body: 'Courier New', Courier, monospace;
-    --font-mono: 'Courier New', Courier, monospace;
+    --font-heading: 'Inter', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'Space Mono', monospace;
     background: #FFFFFF;
     color: #000000;
 }

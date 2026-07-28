@@ -4,15 +4,18 @@
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>OmniLabs | AI Solutions Africa </title>
-    <link rel="icon" href="media/favicon.png" type="image/png">
+    <title>OmniLabs | AI Solutions Africa</title>
+    <link href="media/favicon.png" rel="icon" type="image/png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/is_js@0.9.0/is.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.js"></script>
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Outfit:wght@500;600&amp;family=Space+Mono:wght@400;700&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
-        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/font-geist/1.0.0/geist.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;600;700&family=Space+Mono:wght@400;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+          rel="stylesheet">
     <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -53,12 +56,13 @@
                         "pill": "9999px"
                     },
                     "fontFamily": {
-                        "tech-label": ["Space Mono"],
-                        "h1": ["Outfit"],
-                        "h2": ["Outfit"],
-                        "body-sm": ["Inter"],
-                        "button-text": ["Space Mono"],
-                        "body-main": ["Inter"]
+                        "geist": ["Geist", "Geistsans", "-apple-system", "BlinkMacSystemFont", "sans-serif"],
+                        "tech-label": ["Space Mono", "monospace"],
+                        "h1": ["Inter", "Geist", "sans-serif"],
+                        "h2": ["Inter", "Geist", "sans-serif"],
+                        "body-sm": ["Inter", "Geist", "sans-serif"],
+                        "button-text": ["Space Mono", "monospace"],
+                        "body-main": ["Inter", "Geist", "sans-serif"]
                     }
                 }
             }
@@ -68,6 +72,7 @@
         body {
             background-color: #0D0D0D;
             color: #FFFFFF;
+            font-family: 'Geist', 'Inter', sans-serif;
             scroll-behavior: smooth;
         }
 
@@ -85,7 +90,7 @@
         }
 
         .glow-sage {
-            box-shadow: 0 0 15px rgba(129, 192, 144, 0.35);
+            /* Removed neon glow box-shadow */
         }
 
         .material-symbols-outlined {
@@ -103,12 +108,43 @@
             transform: translateY(0);
         }
 
-        /* Premium Button Shimmer & Transitions */
+        /* Nav Glass Transition */
+        #nav-wrapper {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        #nav-wrapper.scrolled {
+            top: 1.25rem;
+            max-width: 880px;
+            width: 90%;
+            border-radius: 9999px;
+            padding-top: 0.6rem;
+            padding-bottom: 0.6rem;
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+            background: rgba(13, 13, 13, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+        }
+
+        .nav-journey-pill {
+            transition: all 0.3s ease;
+        }
+
+        .nav-journey-pill.active {
+            background-color: rgba(129, 192, 144, 0.15);
+            color: #81C090;
+            border-color: rgba(129, 192, 144, 0.4);
+            box-shadow: 0 0 12px rgba(129, 192, 144, 0.2);
+        }
+
+        /* Shimmer Effect */
         @keyframes shimmer {
             0% {
                 transform: translateX(-100%);
             }
-
             100% {
                 transform: translateX(100%);
             }
@@ -133,545 +169,1831 @@
         }
     </style>
 </head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KY89KED7H6"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
 
-<body class="font-body-main selection:bg-primary-container selection:text-on-primary-container">
-    <!-- TopNavBar -->
-    <nav id="main-nav"
-        class="fixed top-0 w-full z-50 bg-[#0D0D0D]/80 backdrop-blur-lg border-b border-outline flex justify-between items-center px-8 py-4 max-w-full transition-all duration-300">
-        <!-- Scroll Progress Bar -->
-        <div id="scroll-progress" class="absolute top-0 left-0 h-[2px] bg-primary w-0 transition-all duration-150">
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-KY89KED7H6');
+</script>
+<body class="font-geist selection:bg-primary-container selection:text-on-primary-container bg-[#0D0D0D]">
+
+<!-- Floating Shrinking Nav Container -->
+<div class="fixed top-0 left-0 right-0 z-50 flex justify-center px-4 transition-all duration-300 pointer-events-none">
+    <nav class="pointer-events-auto w-full max-w-7xl top-0 bg-[#0D0D0D]/90 backdrop-blur-md border-b border-outline/50 flex justify-between items-center px-8 py-4 transition-all duration-500 ease-out shadow-lg"
+         id="nav-wrapper">
+
+        <!-- Brand Logo & Name -->
+        <a class="flex items-center gap-3 group shrink-0" href="#home">
+            <img alt="OmniLabs Logo"
+                 class="h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-105"
+                 src="media/omni%20face_upscayl_5x_upscayl-standard-4x.png">
+            <span class="text-xl font-bold tracking-tight text-white font-h1">OmniLabs</span>
+        </a>
+
+        <!-- Scroll-Spy Glass Journey Pill Links -->
+        <div class="hidden md:flex gap-1 items-center bg-[#151515]/60 p-1 rounded-full border border-white/5 shrink-0"
+             id="nav-journey-links">
+            <a class="nav-journey-link nav-journey-pill px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-wider text-on-surface-variant hover:text-white border border-transparent transition-all whitespace-nowrap"
+               href="#home">Home</a>
+            <a class="nav-journey-link nav-journey-pill px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-wider text-on-surface-variant hover:text-white border border-transparent transition-all whitespace-nowrap"
+               href="#solutions">Solutions</a>
+            <a class="nav-journey-link nav-journey-pill px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-wider text-on-surface-variant hover:text-white border border-transparent transition-all whitespace-nowrap"
+               href="#features">Features</a>
+            <a class="nav-journey-link nav-journey-pill px-4 py-1.5 rounded-full text-xs font-medium uppercase tracking-wider text-on-surface-variant hover:text-white border border-transparent transition-all whitespace-nowrap"
+               href="#pricing">Pricing</a>
         </div>
 
-        <div class="flex items-center gap-3">
-            <img alt="OmniLabs Logo" class="h-8 w-8 object-contain"
-                src="media/omni%20face_upscayl_5x_upscayl-standard-4x.png" style="">
-            <span class="text-xl font-bold tracking-tighter text-white font-h1" style="">OmniLabs</span>
-        </div>
-        <div class="hidden md:flex gap-8 items-center">
-            <a class="nav-link font-mono text-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-all duration-300 border-b-2 border-transparent pb-1"
-                href="#solutions">Solutions</a>
-            <a class="nav-link font-mono text-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-all duration-300 border-b-2 border-transparent pb-1"
-                href="#features">Features</a>
-            <a class="nav-link font-mono text-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-all duration-300 border-b-2 border-transparent pb-1"
-                href="#pricing">Pricing</a>
-        </div>
-        <div class="flex items-center gap-4">
-            <a href="https://ai.omnilabsghana.tech"
-                class="hidden sm:block border border-outline hover:border-primary text-white hover:bg-primary/10 font-button-text text-xs px-6 py-2 rounded-pill uppercase tracking-widest active:scale-95 duration-200 no-underline transition-all"
-                style="">
-                Log In
+        <!-- Actions -->
+        <div class="flex items-center gap-3 shrink-0">
+            <a class="hidden sm:inline-flex text-xs font-medium text-white/80 hover:text-white px-4 py-2 transition-colors whitespace-nowrap"
+               href="https://ai.omnilabsghana.tech">
+                Sign in
             </a>
-            <button id="mobile-menu-btn" class="md:hidden text-white p-2" aria-label="Toggle Menu">
+            <a class="bg-primary hover:bg-[#6fae7e] text-black font-extrabold text-xs px-5 py-2.5 rounded-pill flex items-center gap-1.5 shadow-[0_0_20px_rgba(129,192,144,0.3)] hover:shadow-[0_0_40px_rgba(129,192,144,0.6)] hover:scale-105 transition-all duration-300 active:scale-95 whitespace-nowrap"
+               href="https://ai.omnilabsghana.tech">
+                <span>Start free</span>
+                <i class="w-3.5 h-3.5" data-lucide="chevron-right"></i>
+            </a>
+            <button aria-label="Toggle Menu" class="md:hidden text-white p-2 focus:outline-none" id="mobile-menu-btn">
                 <span class="material-symbols-outlined">menu</span>
             </button>
         </div>
     </nav>
+</div>
 
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu"
-        class="fixed inset-0 z-[60] bg-[#0D0D0D] translate-x-full transition-transform duration-300 md:hidden">
-        <div class="flex flex-col h-full p-8">
-            <div class="flex justify-between items-center mb-12">
+<!-- Mobile Menu Overlay -->
+<div class="fixed inset-0 z-[60] bg-[#0D0D0D]/95 backdrop-blur-xl translate-x-full transition-transform duration-300 md:hidden"
+     id="mobile-menu">
+    <div class="flex flex-col h-full p-8">
+        <div class="flex justify-between items-center mb-12">
+            <div class="flex items-center gap-3">
+                <img alt="OmniLabs Logo" class="h-8 w-8 object-contain"
+                     src="media/omni%20face_upscayl_5x_upscayl-standard-4x.png">
                 <span class="text-xl font-bold tracking-tighter text-white font-h1">OmniLabs</span>
-                <button id="close-menu-btn" class="text-white p-2">
-                    <span class="material-symbols-outlined">close</span>
-                </button>
             </div>
-            <div class="flex flex-col gap-8">
-                <a class="font-mono text-2xl uppercase tracking-widest text-on-surface-variant hover:text-primary mobile-nav-link"
-                    href="#features">Features</a>
-                <a class="font-mono text-2xl uppercase tracking-widest text-on-surface-variant hover:text-primary mobile-nav-link"
-                    href="#solutions">Solutions</a>
-                <a class="font-mono text-2xl uppercase tracking-widest text-on-surface-variant hover:text-primary mobile-nav-link"
-                    href="#pricing">Pricing</a>
-            </div>
-            <div class="mt-auto">
-                <a href="https://ai.omnilabsghana.tech"
-                    class="block text-center w-full bg-primary text-on-primary font-button-text py-4 uppercase tracking-widest rounded-pill no-underline hover:glow-sage active:scale-95 transition-all duration-200">Get
-                    Started</a>
-            </div>
+            <button class="text-white p-2" id="close-menu-btn">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <div class="flex flex-col gap-6">
+            <a class="font-mono text-xl uppercase tracking-widest text-on-surface-variant hover:text-primary mobile-nav-link"
+               href="#home">Home</a>
+            <a class="font-mono text-xl uppercase tracking-widest text-on-surface-variant hover:text-primary mobile-nav-link"
+               href="#solutions">Solutions</a>
+            <a class="font-mono text-xl uppercase tracking-widest text-on-surface-variant hover:text-primary mobile-nav-link"
+               href="#features">Features</a>
+            <a class="font-mono text-xl uppercase tracking-widest text-on-surface-variant hover:text-primary mobile-nav-link"
+               href="#pricing">Pricing</a>
+        </div>
+        <div class="mt-auto">
+            <a class="block text-center w-full bg-primary text-on-primary font-bold py-4 uppercase tracking-widest rounded-full shadow-lg active:scale-95 transition-all"
+               href="https://ai.omnilabsghana.tech">Start
+                free</a>
         </div>
     </div>
+</div>
 
-    <main class="pt-24">
-        <!-- Hero Section -->
-        <section class="relative min-h-[921px] flex items-center px-8 overflow-hidden" id="home">
-            <div class="absolute inset-0 z-0">
-                <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover opacity-35">
-                    <source src="media/11354070-uhd_3840_2160_60fps.mp4" type="video/mp4">
-                </video>
-                <div class="absolute inset-0 bg-gradient-to-b from-[#0D0D0D] via-[#0D0D0D]/40 to-[#0D0D0D]"></div>
-            </div>
-            <div class="relative z-10 max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center w-full">
-                <div class="space-y-8 fade-in-on-scroll">
-                    <div class="inline-block px-3 py-1 border border-primary/30 bg-primary/5 rounded-pill">
-                        <span class="font-tech-label text-tech-label text-primary uppercase" style="">Africa's AI
-                            Commerce Frontier</span>
-                    </div>
-                    <h1 class="font-h1 text-h1 text-white leading-none" style="font-size: clamp(2.5rem, 5vw, 4.5rem);">
-                        Your Business, <br><span class="text-primary" style="">Always Awake.</span></h1>
-                    <p class="font-body-main text-on-surface-variant max-w-lg text-lg" style="">OmniLabs empowers
-                        African businesses with AI assistants that sell, talk, and process payments across WhatsApp and
-                        Voice—24/7.</p>
-                    <div class="flex gap-4">
-                        <a href="https://ai.omnilabsghana.tech"
-                            class="shimmer-btn bg-primary text-on-primary font-button-text text-sm px-8 py-4 rounded-pill uppercase tracking-widest hover:glow-sage active:scale-95 transition-all duration-300 no-underline"
-                            style="">Launch Your AI</a>
-                        <button
-                            class="border border-outline text-white font-button-text text-sm px-8 py-4 rounded-pill uppercase tracking-widest hover:border-white hover:bg-white/5 active:scale-95 transition-all duration-300"
-                            style="">Book A Demo</button>
-                    </div>
-                </div>
-                <div class="relative flex justify-center fade-in-on-scroll">
-                    <!-- Phone Mockup Container -->
-                    <div
-                        class="relative w-[320px] h-[640px] rounded-[3rem] border-[8px] border-surface-container-highest bg-black overflow-hidden shadow-2xl">
-                        <!-- WhatsApp Style Mockup Content -->
-                        <video autoplay muted loop playsinline class="absolute max-w-none"
-                            style="height: 130%; width: auto; max-width: none; top: -18%; left: -250.2%;">
-                            <source src="media/hero-video.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
-                    <!-- Decorative Glow Behind Phone -->
-                    <div
-                        class="absolute -z-10 w-64 h-64 bg-primary/20 blur-[100px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                    </div>
-                </div>
-            </div>
-        </section>
+<main>
+    <!-- Recreated Hero Section matching Intelli/OmniLabs UI -->
+    <section
+            class="relative min-h-[92vh] flex flex-col justify-center items-center px-6 pt-44 sm:pt-48 pb-36 sm:pb-40 text-center overflow-hidden"
+            id="home">
 
-        <!-- Header Journey (How it Works) -->
-        <section class="py-24 px-8 max-w-7xl mx-auto" id="solutions">
-            <div class="text-center mb-16 space-y-4 fade-in-on-scroll">
-                <h2 class="font-h2 text-h2 text-white text-3xl md:text-4xl" style="">Three Steps to Automation</h2>
-                <div class="h-1 w-24 bg-primary mx-auto"></div>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8 relative">
-                <!-- Connecting Line (Desktop) -->
-                <div class="hidden md:block absolute top-1/2 left-0 w-full h-[1px] bg-outline -translate-y-1/2 z-0">
-                </div>
-                <div
-                    class="glass-panel p-8 relative z-10 space-y-4 group hover:border-primary/50 transition-colors fade-in-on-scroll">
-                    <div class="w-12 h-12 bg-background border border-primary/20 flex items-center justify-center mb-6">
-                        <span class="material-symbols-outlined text-primary" style="">hub</span>
-                    </div>
-                    <p class="font-tech-label text-tech-label text-primary uppercase" style="">Step 01</p>
-                    <h3 class="font-h2 text-xl text-white" style="">Connect Phone Number</h3>
-                    <p class="font-body-sm text-on-surface-variant" style="">Sync your business number in 60 seconds
-                        with our secure API gateway.</p>
-                </div>
-                <div
-                    class="glass-panel p-8 relative z-10 space-y-4 group hover:border-primary/50 transition-colors fade-in-on-scroll">
-                    <div class="w-12 h-12 bg-background border border-primary/20 flex items-center justify-center mb-6">
-                        <span class="material-symbols-outlined text-primary" style="">psychology</span>
-                    </div>
-                    <p class="font-tech-label text-tech-label text-primary uppercase" style="">Step 02</p>
-                    <h3 class="font-h2 text-xl text-white" style="">AI Learns Catalog</h3>
-                    <p class="font-body-sm text-on-surface-variant" style="">Upload images or sheets. Our AI learns your
-                        products and pricing instantly.</p>
-                </div>
-                <div
-                    class="glass-panel p-8 relative z-10 space-y-4 group hover:border-primary/50 transition-colors fade-in-on-scroll">
-                    <div class="w-12 h-12 bg-background border border-primary/20 flex items-center justify-center mb-6">
-                        <span class="material-symbols-outlined text-primary" style="">payments</span>
-                    </div>
-                    <p class="font-tech-label text-tech-label text-primary uppercase" style="">Step 03</p>
-                    <h3 class="font-h2 text-xl text-white" style="">Shop &amp; Pay</h3>
-                    <p class="font-body-sm text-on-surface-variant" style="">Customers browse and pay via Paystack
-                        without leaving the chat.</p>
-                </div>
-            </div>
-        </section>
+        <!-- Subtle Radial Gradient Background -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[550px] bg-primary/15 rounded-full blur-[180px]"></div>
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[380px] bg-primary/10 rounded-full blur-[150px]"></div>
+        </div>
 
-        <!-- Features Bento Grid -->
-        <section class="py-24 bg-background-variant" id="features">
-            <div class="max-w-7xl mx-auto px-8">
-                <div class="mb-16 fade-in-on-scroll">
-                    <p class="font-tech-label text-tech-label text-primary uppercase mb-2" style="">Engineered for Scale
-                    </p>
-                    <h2 class="font-h2 text-h2 text-white text-3xl md:text-4xl" style="">The Merchant Stack</h2>
-                </div>
-                <div class="grid md:grid-cols-12 gap-4 auto-rows-[240px]">
-                    <!-- Large Card: Voice Call Assistant -->
-                    <div
-                        class="md:col-span-8 glass-panel p-8 flex flex-col justify-between group overflow-hidden relative fade-in-on-scroll">
-                        <div class="relative z-10">
-                            <h3 class="font-h1 text-2xl text-white mb-2" style="">AI Voice Call Assistant</h3>
-                            <p class="font-body-main text-on-surface-variant max-w-md" style="">Our AI handles inbound
-                                calls in local accents, answering FAQs and taking orders while you sleep.</p>
-                        </div>
-                        <div class="absolute right-0 bottom-0 opacity-10 group-hover:opacity-30 transition-opacity">
-                            <span class="material-symbols-outlined text-[200px] text-primary"
-                                style="">record_voice_over</span>
-                        </div>
-                    </div>
-                    <!-- Small Card: Visual Search -->
-                    <div
-                        class="md:col-span-4 glass-panel p-8 flex flex-col items-center justify-center text-center space-y-4 border-outline fade-in-on-scroll">
-                        <span class="material-symbols-outlined text-primary text-4xl" style="">image_search</span>
-                        <h3 class="font-h2 text-lg text-white" style="">Visual Product Search</h3>
-                        <p class="font-body-sm text-on-surface-variant" style="">Customers send photos, AI finds
-                            matches.</p>
-                    </div>
-                    <!-- Medium Card: Paystack -->
-                    <div class="md:col-span-5 glass-panel p-8 border-l-4 border-l-primary/60 fade-in-on-scroll">
-                        <span class="material-symbols-outlined text-primary mb-4" style="">account_balance_wallet</span>
-                        <h3 class="font-h2 text-xl text-white mb-2" style="">Paystack Integration</h3>
-                        <p class="font-body-sm text-on-surface-variant" style="">Seamless Momo and Card checkout
-                            directly within the AI workflow.</p>
-                    </div>
-                    <!-- Large Card: Dashboard -->
-                    <div class="md:col-span-7 glass-panel p-8 relative overflow-hidden fade-in-on-scroll">
-                        <div class="flex justify-between items-start mb-6">
-                            <div>
-                                <h3 class="font-h2 text-xl text-white mb-1">Owner Dashboard</h3>
-                                <p class="font-body-sm text-on-surface-variant">Real-time performance for <span
-                                        class="text-primary font-bold">Your Business</span></p>
-                            </div>
-                            <div class="bg-primary/10 px-3 py-1 rounded-full border border-primary/20">
-                                <span class="font-tech-label text-[10px] text-primary">LIVE ANALYTICS</span>
-                            </div>
-                        </div>
+        <!-- Central Hero Block constrained to 896px max-width -->
+        <div class="relative z-10 w-full max-w-[896px] mx-auto flex flex-col items-center space-y-12 fade-in-on-scroll">
 
-                        <!-- Mini Dashboard UI Representation -->
-                        <div class="grid grid-cols-12 gap-4 mt-4">
-                            <!-- Left: Stats -->
-                            <div class="col-span-8 grid grid-cols-2 gap-3">
-                                <div class="bg-[#0D0D0D] border border-outline p-4 rounded-2xl">
-                                    <p class="text-[9px] text-on-surface-variant uppercase mb-1">Total Revenue</p>
-                                    <p class="text-lg font-bold text-white leading-none">GHS 4,020</p>
-                                    <p class="text-[8px] text-primary mt-1">+100% trend</p>
-                                </div>
-                                <div class="bg-[#0D0D0D] border border-outline p-4 rounded-2xl">
-                                    <p class="text-[9px] text-on-surface-variant uppercase mb-1">Successful Orders</p>
-                                    <p class="text-lg font-bold text-white leading-none">6</p>
-                                    <p class="text-[8px] text-primary mt-1">Live Tracking</p>
-                                </div>
-                                <!-- Performance Mini Graph -->
-                                <div
-                                    class="col-span-2 bg-[#E29553]/5 border border-[#E29553]/10 p-4 rounded-2xl flex items-end justify-between gap-2 h-24">
-                                    <div class="w-full bg-[#1E1E1E] h-8 rounded-sm"></div>
-                                    <div class="w-full bg-primary h-16 rounded-sm"></div>
-                                    <div class="w-full bg-[#1E1E1E] h-10 rounded-sm"></div>
-                                    <div class="w-full bg-[#1E1E1E] h-14 rounded-sm"></div>
-                                </div>
-                            </div>
-                            <!-- Right: Activity Log -->
-                            <div
-                                class="col-span-4 bg-[#0D0D0D] border border-outline p-4 rounded-2xl flex flex-col gap-3">
-                                <p class="text-[9px] text-on-surface-variant uppercase mb-1">Activity Log</p>
-                                <div class="flex items-center gap-2">
-                                    <div
-                                        class="w-5 h-5 rounded-full bg-[#E29553]/20 text-[#E29553] flex items-center justify-center text-[8px] font-bold">
-                                        K</div>
-                                    <p class="text-[9px] font-bold text-white">Kwasi +150</p>
-                                </div>
-                                <div class="flex items-center gap-2 border-t border-outline pt-2">
-                                    <div
-                                        class="w-5 h-5 rounded-full bg-[#81C090]/20 text-[#81C090] flex items-center justify-center text-[8px] font-bold">
-                                        I</div>
-                                    <p class="text-[9px] font-bold text-white">Ian +75</p>
-                                </div>
-                                <div class="flex items-center gap-2 border-t border-outline pt-2">
-                                    <div
-                                        class="w-5 h-5 rounded-full bg-[#A0A0A0]/20 text-[#A0A0A0] flex items-center justify-center text-[8px] font-bold">
-                                        I</div>
-                                    <p class="text-[9px] font-bold text-white">Ian +85</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+            <!-- Main Headline matching 60px font-size, 60px line-height, -1.5px letter-spacing -->
+            <h1 class="font-h1 text-white font-semibold tracking-[-1.5px] leading-[65px] text-[38px] sm:text-[52px] md:text-[60px] py-2">
+                Stop losing customers to <br class="hidden sm:inline">
+                <span class="text-primary italic font-serif font-normal inline-block mt-3" id="flashing-text"
+                      style="font-family: 'Georgia', serif; transition: opacity 0.3s ease-in-out;">slow replies</span>
+            </h1>
 
-        <!-- Pricing Section -->
-        <section class="py-24 px-8 max-w-7xl mx-auto" id="pricing">
-            <div class="text-center mb-16 fade-in-on-scroll">
-                <h2 class="font-h2 text-h2 text-white text-3xl md:text-4xl" style="">Simple, Technical Pricing</h2>
-                <p class="font-body-main text-on-surface-variant" style="">Powering shops from Accra to Lagos</p>
-            </div>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Starter -->
-                <div class="glass-panel p-8 flex flex-col fade-in-on-scroll">
-                    <p class="font-tech-label text-tech-label text-white/50 uppercase mb-4" style="">Starter</p>
-                    <div class="mb-6">
-                        <span class="text-4xl font-h1 text-white"><span class="currency-symbol">GHS </span><span
-                                class="price-amount" data-usd="49">550</span></span>
-                        <span class="text-on-surface-variant" style="">/mo</span>
-                    </div>
-                    <ul class="flex-1 space-y-4 mb-8">
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            3.1M AI Tokens / mo (~5,000 Chats)
-                        </li>
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span> 50
-                            Product Catalog Limit
-                        </li>
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            WhatsApp Chat Integration
-                        </li>
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            Automated MOMO/Card checkout via Paystack
-                        </li>
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            Standard Dashboard & Analytics
-                        </li>
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            Community Support
-                        </li>
-                    </ul>
-                    <button
-                        class="w-full border border-outline py-3 font-button-text hover:bg-white/5 hover:border-white rounded-pill transition-all uppercase tracking-widest"
-                        style="">Select Plan</button>
-                </div>
-                <!-- Growth (Featured) -->
-                <div class="glass-modal p-8 flex flex-col border-primary/50 relative fade-in-on-scroll">
-                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-primary text-on-primary px-4 py-1 font-tech-label text-[10px] uppercase rounded-pill"
-                        style="">Most Popular</div>
-                    <p class="font-tech-label text-tech-label text-primary uppercase mb-4" style="">Growth</p>
-                    <div class="mb-6">
-                        <span class="text-4xl font-h1 text-white"><span class="currency-symbol">GHS </span><span
-                                class="price-amount" data-usd="89">999</span></span>
-                        <span class="text-on-surface-variant" style="">/mo</span>
-                    </div>
-                    <ul class="flex-1 space-y-4 mb-8">
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            Unlimited AI WhatsApp Chats
-                        </li>
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span> AI
-                            Voice Assistant (200 mins included)
-                        </li>
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            Visual search (Photo product matching)
-                        </li>
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            Advanced owner dashboard & live tracking
-                        </li>
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            Human Handoff (Multi-agent control)
-                        </li>
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            Custom localized accents & speech-to-text
-                        </li>
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            24/7 Priority Support (WhatsApp & Email)
-                        </li>
-                    </ul>
-                    <button
-                        class="w-full bg-primary text-on-primary py-4 font-button-text glow-sage uppercase tracking-widest rounded-pill active:scale-95 duration-200 transition-all"
-                        style="">Go Growth</button>
-                </div>
-                <!-- Enterprise -->
-                <div class="glass-panel p-8 flex flex-col fade-in-on-scroll">
-                    <p class="font-tech-label text-tech-label text-white/50 uppercase mb-4" style="">Enterprise</p>
-                    <div class="mb-6">
-                        <span class="text-4xl font-h1 text-white" style="">Custom</span>
-                    </div>
-                    <ul class="flex-1 space-y-4 mb-8">
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            Multi-Store & Brand Management
-                        </li>
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            Custom LLM Fine-tuning on brand docs
-                        </li>
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            Dedicated Success Manager & SLAs
-                        </li>
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            Custom database & ERP integrations
-                        </li>
-                        <li class="flex items-center gap-2 font-body-sm text-on-surface-variant" style="">
-                            <span class="material-symbols-outlined text-primary text-sm" style="">check_circle</span>
-                            Dedicated Voice Channel (Custom limits)
-                        </li>
-                    </ul>
-                    <button
-                        class="w-full border border-outline py-3 font-button-text hover:bg-white/5 hover:border-white rounded-pill transition-all uppercase tracking-widest"
-                        style="">Contact Sales</button>
-                </div>
-            </div>
-        </section>
+            <!-- Subtitle / Tagline matching 16px font-size, 25.888px line-height -->
+            <p class="font-body-main text-on-surface-variant text-[16px] sm:text-[18px] leading-[28px] max-w-[680px] font-normal tracking-wide px-4 my-2">
+                Launch an <span class="text-white font-medium border-b border-white/40 pb-0.5">AI Employee</span> that
+                sells on your behalf via phone call or WhatsApp and sends you reports before you even ask.
+            </p>
 
-        <!-- Final CTA -->
-        <section class="py-24 bg-[#0D0D0D] relative overflow-hidden border-t border-outline">
-            <div class="absolute inset-0 bg-primary/5 blur-[120px] rounded-full scale-150"></div>
-            <div class="relative z-10 max-w-4xl mx-auto px-8 text-center space-y-10 fade-in-on-scroll">
-                <h2 class="font-h1 text-4xl md:text-5xl text-white" style="">Ready to automate your growth?</h2>
-                <p class="font-body-main text-on-surface-variant text-xl" style="">Join hundreds of merchants redefining
-                    commerce in Africa with OmniLabs.</p>
-                <a href="https://ai.omnilabsghana.tech"
-                    class="shimmer-btn inline-block bg-primary text-on-primary font-button-text text-lg px-12 py-6 rounded-pill uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(129,192,144,0.35)] hover:scale-105 duration-300 no-underline"
-                    style="">
-                    Get Started Now
+            <!-- Call to Action Buttons with generous breathing gap -->
+            <div class="flex flex-wrap items-center justify-center gap-6 pt-6">
+                <a class="bg-primary hover:bg-[#6fae7e] text-black font-extrabold text-base sm:text-lg px-9 py-4 rounded-pill flex items-center gap-3 shadow-[0_0_20px_rgba(129,192,144,0.3)] hover:shadow-[0_0_40px_rgba(129,192,144,0.6)] hover:scale-105 transition-all duration-300 active:scale-95 no-underline"
+                   href="https://ai.omnilabsghana.tech">
+                    <span>Book a demo</span>
+                    <i class="w-5 h-5" data-lucide="chevron-right"></i>
+                </a>
+                <a class="border border-outline/80 hover:border-primary/60 bg-surface-container/70 text-white font-medium text-base sm:text-lg px-9 py-4 rounded-full flex items-center gap-3 hover:bg-primary/10 hover:scale-[1.02] transition-all duration-200 active:scale-95 no-underline"
+                   href="#features">
+                    <span>Stop missing leads</span>
+                    <i class="w-5 h-5" data-lucide="chevron-right"></i>
                 </a>
             </div>
-        </section>
-    </main>
 
-    <!-- Footer -->
-    <footer class="bg-[#0D0D0D] border-t border-outline w-full py-16">
-        <div class="max-w-7xl mx-auto px-8">
-            <div class="grid md:grid-cols-4 gap-12 mb-12">
-                <!-- Brand -->
-                <div class="col-span-2">
-                    <div class="flex items-center gap-3 mb-6">
-                        <img alt="OmniLabs Logo" class="h-8 w-8"
-                            src="media/omni%20face_upscayl_5x_upscayl-standard-4x.png">
-                        <span class="text-xl font-bold text-white font-h1">OmniLabs</span>
-                    </div>
-                    <p class="text-on-surface-variant text-sm max-w-sm mb-6">OmniLabs AI Solutions is a Ghanaian
-                        technology startup building AI-powered business automation tools for small and medium
-                        enterprises (SMEs).</p>
-                    <div class="flex gap-4">
-                        <a href="#"
-                            class="w-8 h-8 rounded-full border border-outline flex items-center justify-center hover:bg-white/10 transition-all text-on-surface-variant hover:text-primary">𝕏</a>
-                        <a href="#"
-                            class="w-8 h-8 rounded-full border border-outline flex items-center justify-center hover:bg-white/10 transition-all text-on-surface-variant hover:text-primary">in</a>
-                        <a href="#"
-                            class="w-8 h-8 rounded-full border border-outline flex items-center justify-center hover:bg-white/10 transition-all text-on-surface-variant hover:text-primary">ig</a>
-                    </div>
+            <!-- Social Proof Logos Header -->
+            <div class="pt-24 sm:pt-28 flex flex-col items-center gap-10 w-full">
+                <div class="flex items-center gap-2.5 text-xs sm:text-sm uppercase tracking-widest font-mono text-on-surface-variant/70">
+                    <span class="w-2.5 h-2.5 rounded-full bg-primary/80 animate-pulse"></span>
+                    <span>JOIN BUSINESSES GROW WITH OMNILABS</span>
                 </div>
 
-                <!-- Contact -->
-                <div>
-                    <h4 class="font-h1 text-white mb-6 uppercase tracking-widest text-xs">Contact Us</h4>
-                    <ul class="space-y-4 text-sm text-on-surface-variant">
-                        <li class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-sm text-primary">mail</span>
-                            <a href="mailto:hi@omnilabsghana.tech"
-                                class="hover:text-primary transition-colors">hi@omnilabsghana.tech</a>
-                        </li>
-                        <li class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-sm text-primary">call</span>
-                            <a href="tel:+233264022355" class="hover:text-primary transition-colors">0264022355</a>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="material-symbols-outlined text-sm text-primary">location_on</span>
-                            <span>Accra, Ghana</span>
-                        </li>
-                    </ul>
-                </div>
+                <!-- Partner Logos Row -->
+                <div class="flex flex-wrap justify-center items-center gap-8 sm:gap-14 opacity-75 grayscale hover:grayscale-0 transition-all duration-500 text-white/80">
 
-                <!-- Links -->
-                <div>
-                    <h4 class="font-h1 text-white mb-6 uppercase tracking-widest text-xs">Company</h4>
-                    <ul class="space-y-4 text-sm text-on-surface-variant">
-                        <li><a href="/about" class="hover:text-primary transition-colors">About Us</a></li>
-                        <li><a href="/privacy" class="hover:text-primary transition-colors">Privacy Policy</a></li>
-                        <li><a href="#" class="hover:text-primary transition-colors">Terms of Service</a></li>
-                    </ul>
+                    <!-- Shopfetch GH -->
+                    <div class="flex items-center gap-2 font-bold text-lg sm:text-xl tracking-tight">
+                        <i class="w-5 h-5 text-primary" data-lucide="shopping-bag"></i>
+                        <span>Shopfetch GH</span>
+                    </div>
+
+                    <!-- Studywise Consult -->
+                    <div class="flex items-center gap-2 font-serif italic text-lg sm:text-xl">
+                        <i class="w-5 h-5 text-primary" data-lucide="book-open"></i>
+                        <span>Studywise Consult</span>
+                    </div>
+
+                    <!-- Kenkey Express -->
+                    <div class="flex items-center gap-2 font-mono font-bold tracking-widest text-sm sm:text-base uppercase">
+                        <i class="w-5 h-5 text-primary" data-lucide="truck"></i>
+                        <span>Kenkey Express</span>
+                    </div>
+
+                    <!-- Mensaano & Shawarma Shark -->
+                    <div class="flex items-center gap-2 font-sans font-black tracking-tighter text-lg sm:text-xl">
+                        <i class="w-5 h-5 text-primary" data-lucide="utensils"></i>
+                        <span>Mensaano &amp; Shawarma Shark</span>
+                    </div>
+
+                    <!-- Heiwala Komi -->
+                    <div class="flex items-center gap-2 font-sans font-light tracking-[0.2em] text-xs sm:text-sm uppercase">
+                        <span class="w-2 h-2 rounded-full bg-primary"></span>
+                        <span>Heiwala Komi</span>
+                    </div>
+
+                    <!-- Mr Blinks Bar and Grill -->
+                    <div class="flex items-center gap-2 font-serif font-bold text-lg sm:text-xl">
+                        <i class="w-5 h-5 text-primary" data-lucide="flame"></i>
+                        <span>Mr Blinks Bar &amp; Grill</span>
+                    </div>
+
+                    <!-- Creamy Bytes -->
+                    <div class="flex items-center gap-2 font-sans italic font-bold text-lg sm:text-xl">
+                        <i class="w-5 h-5 text-primary" data-lucide="coffee"></i>
+                        <span>Creamy Bytes</span>
+                    </div>
+
                 </div>
             </div>
 
-            <div class="pt-8 border-t border-outline flex flex-col md:flex-row justify-between items-center gap-4">
-                <p class="font-mono text-[10px] text-on-surface-variant/40 uppercase tracking-widest">© 2026 OmniLabs AI
-                    Solutions. Made with ❤️ in Ghana</p>
-                <p class="font-mono text-[10px] text-on-surface-variant/20 uppercase tracking-widest">Synthetic Horizon
-                    v1.0</p>
+        </div>
+    </section>
+
+    <!-- Interactive Workflow Section (Train, Deploy, Analyze) with Northern Lights Background -->
+    <section class="py-24 md:py-28 px-4 sm:px-8 max-w-full relative overflow-hidden bg-cover bg-center bg-no-repeat"
+             id="solutions" style="background-image: url('images/aurora-bg.jpg');">
+
+        <!-- Dark Ambient Vignette and Radial Glow Overlays -->
+        <div class="absolute inset-0 z-0 bg-gradient-to-b from-[#0D0D0D] via-[#0D0D0D]/60 to-[#0D0D0D] pointer-events-none"></div>
+        <div class="absolute inset-0 z-0 bg-[#0D0D0D]/40 backdrop-blur-[2px] pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto flex flex-col items-center space-y-10 fade-in-on-scroll">
+
+            <!-- Floating Glass Capsule Pill Navigation Bar (Train, Deploy, Analyze) -->
+            <div class="inline-flex items-center gap-1.5 p-1.5 rounded-full bg-[#151515]/90 border border-outline backdrop-blur-xl shadow-2xl">
+                <button class="workflow-tab-btn px-6 py-2 rounded-full text-xs sm:text-sm font-medium transition-all text-on-surface-variant hover:text-white"
+                        data-target="train">Train
+                </button>
+                <button class="workflow-tab-btn px-6 py-2 rounded-full text-xs sm:text-sm font-medium transition-all text-on-surface-variant hover:text-white"
+                        data-target="deploy">Deploy
+                </button>
+                <button class="workflow-tab-btn active px-6 py-2 rounded-full text-xs sm:text-sm font-medium transition-all bg-primary/20 text-primary border border-primary/40 shadow-[0_0_15px_rgba(129,192,144,0.2)]"
+                        data-target="analyze">Analyze
+                </button>
+                <button aria-label="Pause Auto Slider"
+                        class="w-8 h-8 rounded-full flex items-center justify-center text-on-surface-variant hover:text-white transition-colors border border-white/5 ml-1"
+                        id="tab-play-pause">
+                    <i class="w-3.5 h-3.5" data-lucide="pause"></i>
+                </button>
+            </div>
+
+            <!-- Dynamic Title Header -->
+            <div class="max-w-4xl mx-auto space-y-3">
+                <h2 class="font-h1 text-white font-extrabold text-2xl sm:text-4xl md:text-5xl tracking-tight leading-tight transition-all duration-300"
+                    id="workflow-headline">
+                    Track real-time metrics, cost, channel performance, trends, and customer insights
+                </h2>
+            </div>
+
+            <!-- macOS App Browser Window Mockup Frame -->
+            <div class="w-full max-w-5xl rounded-2xl border border-outline bg-[#0d0d0d]/98 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)] overflow-hidden transition-all duration-500 text-left">
+
+                <!-- macOS Window Top Bar -->
+                <div class="bg-surface-container-high px-4 py-3 border-b border-outline flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-[#FF5F56] inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-[#FFBD2E] inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-[#27C93F] inline-block"></span>
+                    </div>
+                    <div class="bg-[#0D0D0D] border border-white/5 px-6 py-1 rounded-full text-xs font-mono text-on-surface-variant/70 flex items-center gap-2 max-w-sm w-full justify-center">
+                        <i class="w-3 h-3 text-primary" data-lucide="lock"></i>
+                        <span id="mockup-url">app.omnilabsghana.tech/settings • AI &amp; Knowledge</span>
+                    </div>
+                    <div class="w-12"></div>
+                </div>
+
+                <!-- Mockup Tab Panels Container -->
+                <div class="p-6 sm:p-8 min-h-[500px]">
+
+                    <!-- 1. TRAIN TAB CONTENT (SETTINGS UI MATCHING SCREENSHOT) -->
+                    <div class="workflow-tab-content hidden space-y-6" id="tab-content-train">
+
+                        <!-- Settings Header & Tab Bar -->
+                        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-outline pb-4">
+                            <div>
+                                <h3 class="text-2xl font-bold text-white font-h1">Settings</h3>
+                                <p class="text-xs text-on-surface-variant">Manage your business profile, AI training,
+                                    and system integrations.</p>
+                            </div>
+                            <div class="inline-flex items-center gap-1 p-1 bg-surface-container-high border border-outline rounded-xl text-xs">
+                                <span class="px-3 py-1.5 rounded-lg text-on-surface-variant flex items-center gap-1.5"><i
+                                        class="w-3.5 h-3.5" data-lucide="layout-grid"></i> General</span>
+                                <span class="px-3 py-1.5 rounded-lg bg-[#252525] text-white font-semibold flex items-center gap-1.5 border border-outline shadow-sm"><i
+                                        class="w-3.5 h-3.5 text-primary"
+                                        data-lucide="cpu"></i> AI &amp; Knowledge</span>
+                                <span class="px-3 py-1.5 rounded-lg text-on-surface-variant flex items-center gap-1.5"><i
+                                        class="w-3.5 h-3.5" data-lucide="zap"></i> Integrations</span>
+                            </div>
+                        </div>
+
+                        <!-- AI Resource Usage Panel -->
+                        <div class="bg-surface-container p-5 rounded-2xl border border-outline space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary">
+                                        <i class="w-5 h-5" data-lucide="activity"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-base font-bold text-white">AI Resource Usage</h4>
+                                        <p class="text-xs text-on-surface-variant">Monitoring your token
+                                            consumption.</p>
+                                    </div>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-xs font-bold text-primary font-mono">38,542 / 315,000,000</p>
+                                    <p class="text-[10px] text-on-surface-variant uppercase font-mono">TOKENS
+                                        CONSUMED</p>
+                                </div>
+                            </div>
+                            <div class="w-full bg-[#202020] h-2 rounded-full overflow-hidden">
+                                <div class="bg-primary h-full rounded-full" style="width: 0.1%;"></div>
+                            </div>
+                            <div class="flex justify-between items-center text-[10px] font-mono text-on-surface-variant">
+                                <span>0.0% USED</span>
+                                <span>314,961,458 TOKENS REMAINING</span>
+                            </div>
+                        </div>
+
+                        <!-- 2 Column Layout: AI Persona & Knowledge Base -->
+                        <div class="grid md:grid-cols-2 gap-6">
+
+                            <!-- Left Box: AI Persona -->
+                            <div class="bg-surface-container p-6 rounded-2xl border border-outline space-y-4 flex flex-col justify-between">
+                                <div class="space-y-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400">
+                                            <i class="w-5 h-5" data-lucide="sparkles"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-base font-bold text-white">AI Persona</h4>
+                                            <p class="text-xs text-on-surface-variant">Define how the AI speaks and
+                                                behaves.</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="space-y-2">
+                                        <label class="text-[10px] font-mono uppercase tracking-wider text-on-surface-variant">INSTRUCTIONS
+                                            &amp; TONE</label>
+                                        <div class="w-full h-36 bg-[#0B0B0B] rounded-xl border border-outline p-3 text-xs text-on-surface-variant/70 font-mono">
+                                            e.g. You are a helpful sales assistant for Acme Corp. Be professional but
+                                            friendly.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button class="w-full bg-[#9333ea] hover:bg-[#8127d1] text-white font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition-all shadow-lg shadow-purple-500/20 mt-4">
+                                    UPDATE AI BEHAVIOR
+                                </button>
+                            </div>
+
+                            <!-- Right Box: Knowledge Base -->
+                            <div class="bg-surface-container p-6 rounded-2xl border border-outline space-y-4 flex flex-col justify-between">
+                                <div class="space-y-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
+                                            <i class="w-5 h-5" data-lucide="database"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-base font-bold text-white">Knowledge Base</h4>
+                                            <p class="text-xs text-on-surface-variant">Upload documents for the AI to
+                                                learn from.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Upload Box -->
+                                    <div class="space-y-1.5">
+                                        <label class="text-[10px] font-mono uppercase tracking-wider text-on-surface-variant">UPLOAD
+                                            FILE (PDF/IMAGE)</label>
+                                        <div class="w-full h-24 border-2 border-dashed border-white/15 rounded-xl bg-[#0B0B0B] flex flex-col items-center justify-center text-xs text-on-surface-variant gap-1.5 hover:border-primary/50 cursor-pointer transition-colors">
+                                            <i class="w-5 h-5 text-on-surface-variant/60"
+                                               data-lucide="upload-cloud"></i>
+                                            <span>Click to upload or drag &amp; drop</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- Toggle Public Option -->
+                                    <div class="bg-[#0B0B0B] p-3 rounded-xl border border-outline flex items-center gap-3">
+                                        <input class="rounded bg-[#1a1a1a] border-white/20 text-primary focus:ring-0" id="public-asset"
+                                               type="checkbox">
+                                        <label class="text-[10px] font-mono uppercase tracking-wider text-on-surface-variant cursor-pointer"
+                                               for="public-asset">MAKE
+                                            ASSET PUBLIC (GET SHAREABLE URL)</label>
+                                    </div>
+                                </div>
+
+                                <button class="w-full bg-[#E29553] hover:bg-[#c97e3f] text-black font-bold text-xs uppercase tracking-wider py-3 rounded-xl transition-all shadow-lg shadow-amber-500/20 mt-4">
+                                    TRAIN AI
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- 3. DEPLOY TAB CONTENT -->
+                    <div class="workflow-tab-content hidden space-y-6" id="tab-content-deploy">
+                        <div class="flex flex-wrap items-center justify-between border-b border-outline pb-4 gap-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Multi-Channel Deployment</h3>
+                                <p class="text-xs text-on-surface-variant">Active channels connected to phone &amp;
+                                    WhatsApp</p>
+                            </div>
+                            <span class="px-3 py-1 bg-primary/10 border border-primary/30 text-primary rounded-full text-xs font-mono">Live Gateway</span>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-6">
+                            <div class="bg-[#0D0D0D] p-5 rounded-xl border border-primary/30 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-white flex items-center gap-2"><i
+                                            class="w-5 h-5 text-primary" data-lucide="message-square"></i> WhatsApp API</span>
+                                    <span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+                                </div>
+                                <p class="text-xs text-on-surface-variant">Connected to +233 26 402 2355</p>
+                                <div class="pt-2 text-xs font-mono text-primary">Status: Active (24/7)</div>
+                            </div>
+                            <div class="bg-[#0D0D0D] p-5 rounded-xl border border-primary/30 space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-white flex items-center gap-2"><i
+                                            class="w-5 h-5 text-primary" data-lucide="phone-call"></i> AI Voice Gateway</span>
+                                    <span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+                                </div>
+                                <p class="text-xs text-on-surface-variant">Inbound &amp; Outbound voice calls</p>
+                                <div class="pt-2 text-xs font-mono text-primary">Status: Active (24/7)</div>
+                            </div>
+                            <div class="bg-[#0D0D0D] p-5 rounded-xl border border-outline space-y-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="font-bold text-white flex items-center gap-2"><i
+                                            class="w-5 h-5 text-primary" data-lucide="credit-card"></i> Paystack Gateway</span>
+                                    <span class="w-2 h-2 rounded-full bg-primary"></span>
+                                </div>
+                                <p class="text-xs text-on-surface-variant">Automated MOMO &amp; Card checkout</p>
+                                <div class="pt-2 text-xs font-mono text-primary">Status: Connected</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 3. ANALYZE TAB CONTENT (EXACT MATCHING ANALYTICS DASHBOARD SCREENSHOT) -->
+                    <div class="workflow-tab-content space-y-6" id="tab-content-analyze">
+
+                        <!-- Top Metric Cards Row (4 Columns) -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <!-- Card 1: Total Orders -->
+                            <div class="bg-surface-container p-5 rounded-2xl border border-outline flex flex-col justify-between min-h-[120px]">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-emerald-950/60 border border-emerald-800/40 flex items-center justify-center text-emerald-400">
+                                        <i class="w-4 h-4" data-lucide="shopping-bag"></i>
+                                    </div>
+                                    <span class="text-xs font-bold text-white">Total Orders</span>
+                                </div>
+                                <div class="mt-3">
+                                    <p class="text-3xl font-extrabold text-white font-h1">2</p>
+                                    <div class="flex justify-between items-center mt-2 text-[10px]">
+                                        <span class="text-on-surface-variant font-mono">In Period</span>
+                                        <span class="px-2 py-0.5 bg-red-950/80 border border-red-800/50 text-red-400 font-bold rounded-md font-mono">-84.6%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 2: Successful Orders -->
+                            <div class="bg-surface-container p-5 rounded-2xl border border-outline flex flex-col justify-between min-h-[120px]">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-emerald-950/60 border border-emerald-800/40 flex items-center justify-center text-emerald-400">
+                                        <i class="w-4 h-4" data-lucide="check-circle-2"></i>
+                                    </div>
+                                    <span class="text-xs font-bold text-white">Successful Orders</span>
+                                </div>
+                                <div class="mt-3">
+                                    <p class="text-3xl font-extrabold text-white font-h1">2</p>
+                                    <div class="flex justify-between items-center mt-2 text-[10px]">
+                                        <span class="text-on-surface-variant font-mono">Paid &amp; Completed</span>
+                                        <span class="px-2 py-0.5 bg-emerald-950/80 border border-emerald-800/50 text-emerald-400 font-bold rounded-md font-mono">LIVE</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 3: Average Revenue -->
+                            <div class="bg-surface-container p-5 rounded-2xl border border-outline flex flex-col justify-between min-h-[120px]">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-amber-950/60 border border-amber-800/40 flex items-center justify-center text-amber-400">
+                                        <i class="w-4 h-4" data-lucide="trending-up"></i>
+                                    </div>
+                                    <span class="text-xs font-bold text-white">Average Revenue</span>
+                                </div>
+                                <div class="mt-3">
+                                    <p class="text-2xl sm:text-3xl font-extrabold text-white font-h1">GHS 705.00</p>
+                                    <div class="flex justify-between items-center mt-2 text-[10px]">
+                                        <span class="text-on-surface-variant font-mono">Per Success</span>
+                                        <span class="px-2 py-0.5 bg-amber-950/80 border border-amber-800/50 text-amber-400 font-bold rounded-md font-mono">SYNCED</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Card 4: Total Paid Invoices -->
+                            <div class="bg-surface-container p-5 rounded-2xl border border-outline flex flex-col justify-between min-h-[120px]">
+                                <div class="flex items-center gap-2.5">
+                                    <div class="w-8 h-8 rounded-lg bg-indigo-950/60 border border-indigo-800/40 flex items-center justify-center text-indigo-400">
+                                        <i class="w-4 h-4" data-lucide="bar-chart-3"></i>
+                                    </div>
+                                    <span class="text-xs font-bold text-white">Total Paid Invoices</span>
+                                </div>
+                                <div class="mt-3">
+                                    <p class="text-2xl sm:text-3xl font-extrabold text-white font-h1">GHS 1410.00</p>
+                                    <div class="flex justify-between items-center mt-2 text-[10px]">
+                                        <span class="text-on-surface-variant font-mono">Net Income</span>
+                                        <span class="px-2 py-0.5 bg-neutral-800 border border-neutral-700 text-neutral-300 font-bold rounded-md font-mono">-30.7%</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Main Dashboard Grid (3 Cards) -->
+                        <div class="grid md:grid-cols-3 gap-6 pt-2">
+
+                            <!-- 1. Revenue Distribution Card (Sage Green Theme) -->
+                            <div class="bg-[#81C090] p-6 rounded-3xl text-black flex flex-col justify-between shadow-xl min-h-[340px]">
+                                <span class="text-[10px] font-mono font-bold tracking-widest uppercase text-black/60">REVENUE DISTRIBUTION</span>
+
+                                <!-- Donut Chart Representation -->
+                                <div class="flex justify-center items-center py-4">
+                                    <div class="relative w-44 h-44 rounded-full flex items-center justify-center"
+                                         style="background: conic-gradient(#ffffff 0% 25%, #66bb6a 25% 65%, #2e7d32 65% 80%, #d87a38 80% 90%, #d7ccc8 90% 100%);">
+                                        <div class="w-28 h-28 bg-[#81C090] rounded-full"></div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center pt-2">
+                                    <p class="text-[10px] font-mono font-bold uppercase tracking-wider text-black/60">
+                                        BEST SELLER</p>
+                                    <p class="text-xl font-extrabold text-black font-h1 mt-0.5">Goat Stew 3L</p>
+                                </div>
+                            </div>
+
+                            <!-- 2. Performance Bar Chart Card (Amber Theme) -->
+                            <div class="bg-[#E29553] p-6 rounded-3xl text-black flex flex-col justify-between shadow-xl min-h-[340px] relative overflow-hidden">
+                                <span class="text-[10px] font-mono font-bold tracking-widest uppercase text-black/60">PERFORMANCE</span>
+
+                                <!-- Vertical Bar Chart Visual -->
+                                <div class="flex items-end justify-between h-40 pt-4 px-1 gap-1">
+                                    <div class="w-2.5 bg-[#81C090] rounded-t-sm" style="height: 75%;"></div>
+                                    <div class="w-2.5 bg-[#81C090]/80 rounded-t-sm" style="height: 35%;"></div>
+                                    <div class="w-2.5 bg-[#81C090] rounded-t-sm" style="height: 55%;"></div>
+                                    <div class="w-2.5 bg-[#81C090]/80 rounded-t-sm" style="height: 45%;"></div>
+                                    <div class="w-2.5 bg-[#81C090] rounded-t-sm" style="height: 60%;"></div>
+                                    <div class="w-2.5 bg-[#81C090] rounded-t-sm" style="height: 60%;"></div>
+                                    <div class="w-2.5 bg-[#81C090] rounded-t-sm" style="height: 75%;"></div>
+                                    <div class="w-2.5 bg-[#81C090]/80 rounded-t-sm" style="height: 40%;"></div>
+                                    <div class="w-2.5 bg-[#81C090]/80 rounded-t-sm" style="height: 30%;"></div>
+                                    <div class="w-2.5 bg-[#81C090] rounded-t-sm" style="height: 55%;"></div>
+                                    <div class="w-2.5 bg-[#81C090] rounded-t-sm" style="height: 50%;"></div>
+                                    <div class="w-2.5 bg-[#81C090]/80 rounded-t-sm" style="height: 25%;"></div>
+                                    <div class="w-2.5 bg-[#81C090] rounded-t-sm" style="height: 60%;"></div>
+                                    <div class="w-2.5 bg-[#81C090] rounded-t-sm" style="height: 70%;"></div>
+                                    <div class="w-2.5 bg-[#81C090]/80 rounded-t-sm" style="height: 85%;"></div>
+                                    <div class="w-2.5 bg-[#81C090]/60 rounded-t-sm" style="height: 95%;"></div>
+                                </div>
+
+                                <!-- Bottom Floating Stat Pill -->
+                                <div class="bg-black/15 backdrop-blur-md p-3.5 rounded-2xl flex items-center justify-between mt-2 border border-black/10">
+                                    <div>
+                                        <p class="text-[9px] font-mono font-bold uppercase tracking-wider text-black/70">
+                                            PEAK TREND</p>
+                                        <p class="text-lg font-extrabold text-black font-h1 mt-0.5">-30.7%</p>
+                                    </div>
+                                    <div class="w-9 h-9 rounded-xl bg-black/20 flex items-center justify-center text-black">
+                                        <i class="w-5 h-5" data-lucide="zap"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 3. Recent Payments Card (Dark Theme) -->
+                            <div class="bg-surface-container p-6 rounded-3xl border border-outline flex flex-col justify-between shadow-xl min-h-[340px]">
+                                <div class="flex items-center gap-2 mb-2">
+                                    <i class="w-4 h-4 text-primary" data-lucide="receipt"></i>
+                                    <h4 class="text-sm font-bold text-white">Recent Payments</h4>
+                                </div>
+
+                                <div class="space-y-3.5">
+                                    <!-- Customer 1 -->
+                                    <div class="flex items-center justify-between text-xs">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-amber-400/20 text-amber-300 font-bold flex items-center justify-center text-xs">
+                                                N
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-white">Nimoatim</p>
+                                                <p class="text-[10px] text-on-surface-variant">27 Jul, 11:56</p>
+                                            </div>
+                                        </div>
+                                        <span class="font-mono font-bold text-white">GHS 110.00</span>
+                                    </div>
+
+                                    <!-- Customer 2 -->
+                                    <div class="flex items-center justify-between text-xs">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-pink-500/20 text-pink-300 font-bold flex items-center justify-center text-xs">
+                                                B
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-white">Beryl</p>
+                                                <p class="text-[10px] text-on-surface-variant">27 Jul, 10:01</p>
+                                            </div>
+                                        </div>
+                                        <span class="font-mono font-bold text-white">GHS 1300.00</span>
+                                    </div>
+
+                                    <!-- Customer 3 -->
+                                    <div class="flex items-center justify-between text-xs">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-300 font-bold flex items-center justify-center text-xs">
+                                                B
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-white">Birago</p>
+                                                <p class="text-[10px] text-on-surface-variant">26 Jul, 18:14</p>
+                                            </div>
+                                        </div>
+                                        <span class="font-mono font-bold text-white">GHS 100.00</span>
+                                    </div>
+
+                                    <!-- Customer 4 -->
+                                    <div class="flex items-center justify-between text-xs">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-purple-500/20 text-purple-300 font-bold flex items-center justify-center text-xs">
+                                                N
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-white flex items-center gap-1">Nhyirabah <span
+                                                        class="text-purple-400">💜</span></p>
+                                                <p class="text-[10px] text-on-surface-variant">26 Jul, 17:25</p>
+                                            </div>
+                                        </div>
+                                        <span class="font-mono font-bold text-white">GHS 140.00</span>
+                                    </div>
+
+                                    <!-- Customer 5 -->
+                                    <div class="flex items-center justify-between text-xs">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 rounded-full bg-blue-500/20 text-blue-300 font-bold flex items-center justify-center text-xs">
+                                                N
+                                            </div>
+                                            <div>
+                                                <p class="font-bold text-white">natasha</p>
+                                                <p class="text-[10px] text-on-surface-variant">26 Jul, 17:07</p>
+                                            </div>
+                                        </div>
+                                        <span class="font-mono font-bold text-white">GHS 85.00</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Footer Section Link -->
+                        <div class="flex justify-between items-center border-t border-outline pt-4 text-xs font-mono">
+                            <span class="text-white font-bold tracking-wider uppercase">RECENT ORDERS</span>
+                            <span class="text-on-surface-variant hover:text-white cursor-pointer underline">View all orders</span>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Curved 3D Business Showcase Gallery Section (Dark Background with Scroll Rotation) -->
+    <section class="py-24 md:py-28 bg-[#0D0D0D] text-white overflow-hidden relative" id="showcase">
+
+        <!-- Radial glow background -->
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[550px] bg-primary/10 rounded-full blur-[180px]"></div>
+        </div>
+
+        <div class="relative z-10 max-w-4xl mx-auto text-center px-6 mb-16 space-y-4 fade-in-on-scroll">
+            <h2 class="font-h1 text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight leading-tight">
+                Every question answered. Every order captured.
+            </h2>
+            <p class="font-body-main text-on-surface-variant text-base sm:text-lg md:text-xl max-w-2xl mx-auto font-normal leading-relaxed">
+                From the morning rush to last minute calls — Omni AI picks up every phone call, replies to every chat,
+                and confirms paymentsadd even after work hours so you can keep running your business running.
+            </p>
+        </div>
+
+        <!-- 3D Curved Perspective Panoramic Image Carousel -->
+        <div class="relative z-10 w-full flex items-center justify-center overflow-x-hidden py-10 px-4">
+            <div class="flex items-center gap-4 sm:gap-6 min-w-max px-8 transition-transform duration-100 ease-out"
+                 id="curved-gallery-track"
+                 style="perspective: 1200px; transform-style: preserve-3d;">
+
+                <!-- Card 1 -->
+                <div class="gallery-card w-48 sm:w-64 md:w-80 h-72 sm:h-96 md:h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-outline transition-all duration-300">
+                    <img alt="African Chef with orders" class="w-full h-full object-cover" src="images/chef.jpg">
+                </div>
+
+                <!-- Card 2 -->
+                <div class="gallery-card w-48 sm:w-64 md:w-80 h-72 sm:h-96 md:h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-outline transition-all duration-300">
+                    <img alt="African women managing business" class="w-full h-full object-cover"
+                         src="images/women-office.jpg">
+                </div>
+
+                <!-- Card 3 -->
+                <div class="gallery-card w-48 sm:w-64 md:w-80 h-72 sm:h-96 md:h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-outline transition-all duration-300">
+                    <img alt="African warehouse order fulfillment" class="w-full h-full object-cover"
+                         src="images/warehouse.jpg">
+                </div>
+
+                <!-- Card 4 (Center Hero) -->
+                <div class="gallery-card w-52 sm:w-72 md:w-84 h-80 sm:h-[420px] md:h-[460px] rounded-3xl overflow-hidden shadow-2xl border-2 border-primary transition-all duration-300">
+                    <img alt="African market trader" class="w-full h-full object-cover" src="images/market.jpg">
+                </div>
+
+                <!-- Card 5 -->
+                <div class="gallery-card w-48 sm:w-64 md:w-80 h-72 sm:h-96 md:h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-outline transition-all duration-300">
+                    <img alt="African restaurant kitchen staff" class="w-full h-full object-cover"
+                         src="images/chef.jpg">
+                </div>
+
+                <!-- Card 6 -->
+                <div class="gallery-card w-48 sm:w-64 md:w-80 h-72 sm:h-96 md:h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-outline transition-all duration-300">
+                    <img alt="African customer service team" class="w-full h-full object-cover"
+                         src="images/women-office.jpg">
+                </div>
+
+                <!-- Card 7 -->
+                <div class="gallery-card w-48 sm:w-64 md:w-80 h-72 sm:h-96 md:h-[420px] rounded-3xl overflow-hidden shadow-2xl border border-outline transition-all duration-300">
+                    <img alt="African logistics operator" class="w-full h-full object-cover" src="images/warehouse.jpg">
+                </div>
+
             </div>
         </div>
-    </footer>
 
-    <script>
-        // Scroll Spy & Progress Bar Logic
-        const navLinks = document.querySelectorAll('.nav-link');
-        const sections = document.querySelectorAll('section[id]');
-        const progressBar = document.getElementById('scroll-progress');
-        const mainNav = document.getElementById('main-nav');
+        <!-- Center Pagination Indicator -->
+        <div class="relative z-10 flex justify-center items-center mt-6">
+            <div class="w-7 h-7 rounded-full border-2 border-primary flex items-center justify-center shadow-[0_0_12px_rgba(129,192,144,0.4)]">
+                <span class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+            </div>
+        </div>
+    </section>
 
-        window.addEventListener('scroll', () => {
-            // 1. Update Progress Bar
-            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            const scrolled = (winScroll / height) * 100;
-            if (progressBar) progressBar.style.width = scrolled + "%";
+    <!-- How It Works Section (Live WhatsApp Customer Journey) -->
+    <section class="py-24 md:py-28 bg-[#0B0C0E] border-t border-white/5 relative overflow-hidden" id="how-it-works">
 
-            // 2. Nav Background Transition
-            if (winScroll > 50) {
-                mainNav?.classList.add('bg-[#0D0D0D]/90', 'py-3');
-                mainNav?.classList.remove('bg-[#0D0D0D]/60', 'py-4');
-            } else {
-                mainNav?.classList.add('bg-[#0D0D0D]/60', 'py-4');
-                mainNav?.classList.remove('bg-[#0D0D0D]/90', 'py-3');
-            }
+        <!-- Ambient Lighting Glows -->
+        <div class="absolute inset-0 pointer-events-none z-0">
+            <div class="absolute top-1/3 left-10 w-96 h-96 bg-[#81C090]/10 rounded-full blur-[140px]"></div>
+            <div class="absolute bottom-10 right-10 w-96 h-96 bg-primary/10 rounded-full blur-[160px]"></div>
+        </div>
 
-            // 3. Scroll Spy (Active Link)
-            let current = "";
-            sections.forEach((section) => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (pageYOffset >= sectionTop - 150) {
-                    current = section.getAttribute("id");
-                }
-            });
+        <div class="max-w-7xl mx-auto px-6 sm:px-8 relative z-10">
 
-            navLinks.forEach((link) => {
-                link.classList.remove('text-primary', 'border-primary');
-                link.classList.add('text-on-surface-variant', 'border-transparent');
-                if (link.getAttribute('href') === `#${current}`) {
-                    link.classList.add('text-primary', 'border-primary');
-                    link.classList.remove('text-on-surface-variant', 'border-transparent');
-                }
-            });
-        });
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const closeMenuBtn = document.getElementById('close-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-in-on-scroll space-y-4">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#81C090]/10 border border-[#81C090]/30 text-[#81C090] text-xs font-mono font-semibold uppercase tracking-widest">
+                    <i class="w-3.5 h-3.5" data-lucide="message-square"></i>
+                    <span>Your Sales Team On Autopilot</span>
+                </div>
+                <h2 class="font-h1 text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                    AI Sales in 4 Simple Steps
+                </h2>
+                <p class="font-body-main text-on-surface-variant text-base sm:text-lg">
+                    Zero friction. No apps to download. Just natural conversation that leads straight to instant
+                    checkout.
+                </p>
+            </div>
 
-        function toggleMenu() {
-            mobileMenu.classList.toggle('translate-x-full');
-            document.body.style.overflow = mobileMenu.classList.contains('translate-x-full') ? '' : 'hidden';
+            <!-- 2-Column Layout: Left Phone Mockup | Right 4 Steps -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+
+                <!-- Left Column: Realistic iPhone WhatsApp Chat Mockup -->
+                <div class="lg:col-span-5 flex justify-center fade-in-on-scroll">
+                    <div class="relative w-full max-w-[340px] sm:max-w-[370px] aspect-[9/18.5] bg-[#111b21] rounded-[48px] border-[9px] border-[#1f2c34] shadow-[0_0_50px_rgba(0,0,0,0.8),0_0_20px_rgba(129,192,144,0.15)] overflow-hidden flex flex-col font-sans">
+
+                        <!-- Dynamic Island / Speaker notch -->
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-6 bg-[#1f2c34] rounded-b-2xl z-30 flex items-center justify-center">
+                            <div class="w-10 h-3 bg-black/60 rounded-full"></div>
+                        </div>
+
+                        <!-- WhatsApp Top Header Bar -->
+                        <div class="bg-[#202c33] pt-7 pb-3 px-4 flex items-center justify-between border-b border-white/5 z-20">
+                            <div class="flex items-center gap-3">
+                                <div class="relative">
+                                    <div class="w-9 h-9 rounded-full bg-gradient-to-tr from-[#81C090] to-emerald-300 flex items-center justify-center text-black font-extrabold text-xs">
+                                        E
+                                    </div>
+                                    <span class="absolute bottom-0 right-0 w-2.5 h-2.5 rounded-full bg-[#81C090] border-2 border-[#202c33]"></span>
+                                </div>
+                                <div>
+                                    <div class="flex items-center gap-1.5">
+                                        <h4 class="text-xs font-bold text-white leading-tight">Omni</h4>
+                                        <i class="w-3 h-3 text-[#81C090] fill-[#81C090]/20"
+                                           data-lucide="check-circle"></i>
+                                    </div>
+                                    <p class="text-[10px] text-[#8696a0]">Official Business • Online</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 text-[#aebac1]">
+                                <i class="w-4 h-4 cursor-pointer hover:text-white" data-lucide="phone"></i>
+                                <i class="w-4 h-4 cursor-pointer hover:text-white" data-lucide="video"></i>
+                            </div>
+                        </div>
+
+                        <!-- WhatsApp Chat Body (Doodled WhatsApp pattern background) -->
+                        <div class="flex-1 bg-[#0b141a] p-3.5 overflow-y-auto space-y-3.5 text-xs text-[#e9edef] relative"
+                             style="background-image: radial-gradient(#202c33 1px, transparent 1px); background-size: 16px 16px;">
+
+                            <!-- Encryption notice -->
+                            <div class="text-center my-2">
+                                    <span class="bg-[#182229] text-[#8696a0] text-[9px] px-2.5 py-1 rounded-md border border-white/5">
+                                        🔒 End-to-end encrypted order session
+                                    </span>
+                            </div>
+
+                            <!-- Customer Message 1 -->
+                            <div class="flex flex-col items-end">
+                                <div class="bg-[#005c4b] text-white p-2.5 rounded-xl rounded-tr-none max-w-[85%] shadow-sm">
+                                    <p class="leading-snug">Hi! Do you have Goat Stew 3L available for delivery
+                                        today?</p>
+                                    <div class="flex items-center justify-end gap-1 mt-1 text-[9px] text-white/70">
+                                        <span>14:02</span>
+                                        <i class="w-3 h-3 text-[#53bdeb]" data-lucide="check-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- AI Assistant Message 1 -->
+                            <div class="flex flex-col items-start">
+                                <div class="bg-[#202c33] text-[#e9edef] p-2.5 rounded-xl rounded-tl-none max-w-[88%] shadow-sm space-y-1.5">
+                                    <p class="leading-snug">Hello! Yes, fresh <span class="font-bold text-[#81C090]">Goat Stew (3L)</span>
+                                        is in stock for <span class="font-mono font-bold text-white">GHS 280.00</span>.
+                                        🍲</p>
+                                    <div class="flex items-center justify-end gap-1 text-[9px] text-[#8696a0]">
+                                        <span>14:02</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Customer Message 2 -->
+                            <div class="flex flex-col items-end">
+                                <div class="bg-[#005c4b] text-white p-2.5 rounded-xl rounded-tr-none max-w-[85%] shadow-sm">
+                                    <p class="leading-snug">Great! Please I want 1 bowl. Delivery to Boundary Road, East
+                                        Legon.</p>
+                                    <div class="flex items-center justify-end gap-1 mt-1 text-[9px] text-white/70">
+                                        <span>14:03</span>
+                                        <i class="w-3 h-3 text-[#53bdeb]" data-lucide="check-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- AI Assistant Message 2 (Interactive Order & MoMo Prompt) -->
+                            <div class="flex flex-col items-start">
+                                <div class="bg-[#202c33] text-[#e9edef] p-3 rounded-xl rounded-tl-none max-w-[92%] shadow-sm border border-[#81C090]/30 space-y-2">
+                                    <div class="flex items-center justify-between border-b border-outline pb-1.5">
+                                        <span class="font-bold text-xs text-[#81C090]">Order Summary #GH-8902</span>
+                                        <span class="text-[9px] bg-[#81C090]/20 text-[#81C090] px-1.5 py-0.5 rounded font-mono">CONFIRMED</span>
+                                    </div>
+                                    <p class="text-[11px]">Item: 1x Goat Stew 3L (GHS 280)</p>
+                                    <p class="text-[11px]">Delivery Fee: GHS 20.00</p>
+                                    <p class="text-xs font-bold text-white font-mono">Total: GHS 300.00</p>
+
+                                    <!-- MoMo Prompt Pill -->
+                                    <div class="bg-[#111b21] p-2 rounded-lg border border-[#81C090]/40 flex items-center justify-between">
+                                        <div class="flex items-center gap-2">
+                                            <div class="w-2 h-2 rounded-full bg-[#81C090] animate-ping"></div>
+                                            <span class="text-[10px] text-white font-medium">MTN MoMo Prompt Sent...</span>
+                                        </div>
+                                        <span class="text-[10px] font-mono text-[#81C090] font-bold">Approve Pin</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Customer Receipt Confirmation -->
+                            <div class="flex flex-col items-end">
+                                <div class="bg-[#005c4b] text-white p-2.5 rounded-xl rounded-tr-none max-w-[85%] shadow-sm">
+                                    <p class="leading-snug">Payment authorized! Receipt received. Thanks! 🙌</p>
+                                    <div class="flex items-center justify-end gap-1 mt-1 text-[9px] text-white/70">
+                                        <span>14:04</span>
+                                        <i class="w-3 h-3 text-[#53bdeb]" data-lucide="check-check"></i>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- WhatsApp Input Footer -->
+                        <div class="bg-[#202c33] p-2.5 flex items-center gap-2 border-t border-white/5">
+                            <i class="w-5 h-5 text-[#8696a0]" data-lucide="smile"></i>
+                            <div class="flex-1 bg-[#2a3942] rounded-full px-3 py-1.5 text-[11px] text-[#8696a0] flex items-center justify-between">
+                                <span>Type a message...</span>
+                                <i class="w-3.5 h-3.5 text-[#8696a0]" data-lucide="paperclip"></i>
+                            </div>
+                            <div class="w-7 h-7 rounded-full bg-[#81C090] flex items-center justify-center text-black">
+                                <i class="w-3.5 h-3.5" data-lucide="mic"></i>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Right Column: 4 Simple Steps to Buy -->
+                <div class="lg:col-span-7 space-y-6 fade-in-on-scroll">
+
+                    <!-- Step 1 -->
+                    <div class="group bg-surface-container hover:bg-surface-container-high p-6 rounded-3xl border border-outline hover:border-[#81C090]/40 transition-all duration-300 flex items-start gap-5">
+                        <div class="w-12 h-12 rounded-2xl bg-[#81C090]/10 border border-[#81C090]/30 text-[#81C090] font-mono text-lg font-bold flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            01
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="text-xl font-bold text-white group-hover:text-[#81C090] transition-colors">
+                                Customer Initiates Chat or Call
+                            </h3>
+                            <p class="text-on-surface-variant text-sm sm:text-base leading-relaxed">
+                                The customer sends a simple text or voice message on WhatsApp to inquire about catalog
+                                items, prices, or availability.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="group bg-surface-container hover:bg-surface-container-high p-6 rounded-3xl border border-outline hover:border-[#81C090]/40 transition-all duration-300 flex items-start gap-5">
+                        <div class="w-12 h-12 rounded-2xl bg-[#81C090]/10 border border-[#81C090]/30 text-[#81C090] font-mono text-lg font-bold flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            02
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="text-xl font-bold text-white group-hover:text-[#81C090] transition-colors">
+                                AI Instantly Recommends & Takes Details
+                            </h3>
+                            <p class="text-on-surface-variant text-sm sm:text-base leading-relaxed">
+                                Omni answers immediately with your trained business knowledge, custom prices, stock
+                                levels, and collects delivery address info.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="group bg-surface-container hover:bg-surface-container-high p-6 rounded-3xl border border-outline hover:border-[#81C090]/40 transition-all duration-300 flex items-start gap-5">
+                        <div class="w-12 h-12 rounded-2xl bg-[#81C090]/10 border border-[#81C090]/30 text-[#81C090] font-mono text-lg font-bold flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            03
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="text-xl font-bold text-white group-hover:text-[#81C090] transition-colors">
+                                Instant Mobile Money Push Notification
+                            </h3>
+                            <p class="text-on-surface-variant text-sm sm:text-base leading-relaxed">
+                                Omni generates an instant MoMo payment prompt directly to the customer's phone (MTN
+                                MoMo, Telecel, AirtelTigo).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="group bg-surface-container hover:bg-surface-container-high p-6 rounded-3xl border border-outline hover:border-[#81C090]/40 transition-all duration-300 flex items-start gap-5">
+                        <div class="w-12 h-12 rounded-2xl bg-[#81C090]/10 border border-[#81C090]/30 text-[#81C090] font-mono text-lg font-bold flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                            04
+                        </div>
+                        <div class="space-y-1">
+                            <h3 class="text-xl font-bold text-white group-hover:text-[#81C090] transition-colors">
+                                Payment Confirmed & Order Sent to Dashboard
+                            </h3>
+                            <p class="text-on-surface-variant text-sm sm:text-base leading-relaxed">
+                                Once approved, the customer gets an automatic WhatsApp receipt, and the order is
+                                instantly logged to your OmniLabs merchant dashboard.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    <!-- Features Bento Grid Section (4 Core Architecture Pillars) -->
+    <section class="py-24 md:py-28 bg-[#0D0D0D] border-t border-white/5 relative" id="features">
+        <div class="max-w-7xl mx-auto px-6 sm:px-8">
+
+            <div class="text-center max-w-3xl mx-auto mb-16 fade-in-on-scroll space-y-4">
+                <p class="font-tech-label text-xs text-primary uppercase tracking-widest font-mono">ENGINEERED FOR
+                    ENTERPRISE SCALE</p>
+                <h2 class="font-h1 text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">The
+                    OmniLabs Merchant Stack</h2>
+                <p class="font-body-main text-on-surface-variant text-base sm:text-lg">Full-stack AI automation powering
+                    sales, visual search, distance logistics, and analytics.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+
+                <!-- Pillar 1: Omnichannel AI Automation (Voice, WhatsApp & Web) -->
+                <div class="md:col-span-7 bg-surface-container p-8 sm:p-10 rounded-3xl border border-outline flex flex-col justify-between group relative overflow-hidden fade-in-on-scroll">
+                    <div class="relative z-10 space-y-3">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-mono font-bold">
+                            <span>01</span> • <span>OMNICHANNEL AI AUTOMATION</span>
+                        </div>
+                        <h3 class="font-h1 text-2xl sm:text-3xl text-white font-bold">Voice, WhatsApp & Web AI
+                            Agents</h3>
+                        <p class="font-body-main text-on-surface-variant text-sm sm:text-base leading-relaxed max-w-lg">
+                            <span class="font-semibold text-white">Real-Time Voice AI:</span> Ultra-low latency voice
+                            sales and customer support agent. Handles inbound calls and messages in English and Local
+                            Languages.
+                        </p>
+                    </div>
+                    <div class="mt-8 flex items-center gap-4 relative z-10">
+                        <span class="px-3 py-1 rounded-lg bg-black/60 border border-outline text-xs font-mono text-white/90">🎙️ Silero VAD</span>
+                        <span class="px-3 py-1 rounded-lg bg-black/60 border border-outline text-xs font-mono text-white/90">⚡ Gemini Realtime</span>
+                        <span class="px-3 py-1 rounded-lg bg-black/60 border border-outline text-xs font-mono text-white/90">💬 WhatsApp & Web</span>
+                    </div>
+                    <div class="absolute -right-6 -bottom-6 opacity-10 group-hover:opacity-25 transition-opacity pointer-events-none">
+                        <span class="material-symbols-outlined text-[200px] text-primary">graphic_eq</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 2: Multimodal Catalog & Visual Search -->
+                <div class="md:col-span-5 bg-surface-container p-8 sm:p-10 rounded-3xl border border-outline flex flex-col justify-between group relative overflow-hidden fade-in-on-scroll">
+                    <div class="relative z-10 space-y-3">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-mono font-bold">
+                            <span>02</span> • <span>MULTIMODAL CATALOG</span>
+                        </div>
+                        <h3 class="font-h1 text-2xl text-white font-bold">Visual Photo Search (RAG)</h3>
+                        <p class="font-body-main text-on-surface-variant text-sm sm:text-base leading-relaxed">
+                            Allows customers to send product photos to instantly match items in inventory.
+                        </p>
+                    </div>
+                    <div class="mt-6 p-4 bg-black/40 rounded-2xl border border-white/5 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-primary text-2xl">center_focus_strong</span>
+                            <span class="text-xs font-mono text-white">Gemini 1408d Embeddings</span>
+                        </div>
+                        <span class="text-[10px] font-mono bg-primary/20 text-primary px-2 py-0.5 rounded font-bold">RAG ACTIVE</span>
+                    </div>
+                </div>
+
+                <!-- Pillar 3: Autonomous Tool-Calling & Operations -->
+                <div class="md:col-span-6 bg-surface-container p-8 sm:p-10 rounded-3xl border border-outline flex flex-col justify-between group relative overflow-hidden fade-in-on-scroll">
+                    <div class="relative z-10 space-y-3">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-mono font-bold">
+                            <span>03</span> • <span>AUTONOMOUS TOOL-CALLING</span>
+                        </div>
+                        <h3 class="font-h1 text-2xl text-white font-bold">Smart Logistics & Paystack Checkout</h3>
+                        <ul class="space-y-2.5 text-sm text-on-surface-variant">
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary font-bold">✓</span>
+                                <span><strong class="text-white">Smart Distance & Delivery:</strong> AI computes driving distance & custom delivery fees dynamically during checkout.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary font-bold">✓</span>
+                                <span><strong class="text-white">Paystack Payments:</strong> Mobile Money & Card payment processing with instant verification receipt dispatch.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary font-bold">✓</span>
+                                <span><strong class="text-white">Human Handoff:</strong> Seamless transfer from AI agent to human support staff when requested.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Pillar 4: Analytics & Owner Operations -->
+                <div class="md:col-span-6 bg-surface-container p-8 sm:p-10 rounded-3xl border border-outline flex flex-col justify-between group relative overflow-hidden fade-in-on-scroll">
+                    <div class="relative z-10 space-y-3">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-mono font-bold">
+                            <span>04</span> • <span>ANALYTICS & OPERATIONAL CONTROL</span>
+                        </div>
+                        <h3 class="font-h1 text-2xl text-white font-bold">Real-time KPI & Growth Dashboard</h3>
+                        <p class="font-body-main text-on-surface-variant text-sm sm:text-base leading-relaxed">
+                            Track Average Order Value (AOV), total sales, customer conversion metrics, sales velocity
+                            trends, and receive AI-driven merchant growth recommendations.
+                        </p>
+                    </div>
+                    <div class="mt-6 grid grid-cols-3 gap-3">
+                        <div class="bg-black/60 p-3 rounded-xl border border-white/5 text-center">
+                            <p class="text-[9px] font-mono text-on-surface-variant uppercase">Track AOV</p>
+                            <p class="text-sm font-bold text-primary font-mono mt-0.5">GHS 240</p>
+                        </div>
+                        <div class="bg-black/60 p-3 rounded-xl border border-white/5 text-center">
+                            <p class="text-[9px] font-mono text-on-surface-variant uppercase">Conversion</p>
+                            <p class="text-sm font-bold text-white font-mono mt-0.5">78.4%</p>
+                        </div>
+                        <div class="bg-black/60 p-3 rounded-xl border border-white/5 text-center">
+                            <p class="text-[9px] font-mono text-on-surface-variant uppercase">AI Forecast</p>
+                            <p class="text-sm font-bold text-emerald-400 font-mono mt-0.5">+34%</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section (Starter, Growth, Pro, Elite & Enterprise Custom) -->
+    <section class="py-24 md:py-28 px-4 sm:px-8 max-w-7xl mx-auto relative" id="pricing">
+
+        <!-- Header & Billing Cycle Selector -->
+        <div class="text-center max-w-3xl mx-auto mb-16 fade-in-on-scroll space-y-4">
+            <p class="font-tech-label text-xs text-primary uppercase tracking-widest font-mono">TRANSPARENT PRICING
+                TIERS</p>
+            <h2 class="font-h1 text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">Flexible Plans
+                for Every Stage</h2>
+            <p class="font-body-main text-on-surface-variant text-base sm:text-lg">All tiers include core platform
+                access, Paystack payment integration, GCS asset storage, and visual photo search.</p>
+
+            <!-- Billing Cycle Selector Pills (Monthly, Bi-Annual, Annual) -->
+            <div class="pt-4 flex justify-center">
+                <div class="inline-flex items-center p-1.5 rounded-full bg-surface-container border border-outline shadow-xl">
+                    <button class="billing-cycle-btn px-5 py-2 rounded-full text-xs font-bold transition-all text-black bg-primary"
+                            data-cycle="monthly">Monthly
+                    </button>
+                    <button class="billing-cycle-btn px-5 py-2 rounded-full text-xs font-bold transition-all text-on-surface-variant hover:text-white"
+                            data-cycle="biannual">
+                        Bi-Annual <span
+                            class="text-[9px] bg-primary/20 text-primary px-1.5 py-0.5 rounded ml-1 font-mono">SAVE UP TO 10%</span>
+                    </button>
+                    <button class="billing-cycle-btn px-5 py-2 rounded-full text-xs font-bold transition-all text-on-surface-variant hover:text-white"
+                            data-cycle="annual">
+                        Annual <span
+                            class="text-[9px] bg-emerald-400/20 text-emerald-400 px-1.5 py-0.5 rounded ml-1 font-mono">SAVE UP TO 20%</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4 Pricing Cards Grid (Starter, Growth, Pro, Elite) -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+            <!-- Tier 1: Starter -->
+            <div class="bg-surface-container hover:bg-surface-container-high p-7 rounded-3xl border border-outline flex flex-col justify-between transition-all duration-300 hover:border-white/20 fade-in-on-scroll">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-mono font-bold text-white/60 uppercase tracking-wider">Starter</span>
+                        <span class="text-[10px] bg-white/5 border border-outline text-white/70 px-2 py-0.5 rounded-full">Boutique</span>
+                    </div>
+                    <p class="text-xs text-on-surface-variant mb-6 leading-relaxed">Social sellers & boutique
+                        micro-merchants</p>
+
+                    <div class="mb-6">
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-xs font-bold text-primary">GHS</span>
+                            <span class="text-3xl font-extrabold text-white font-mono price-display" data-annual="6,600"
+                                  data-biannual="3,300" data-monthly="550">550</span>
+                            <span class="text-xs text-on-surface-variant cycle-label">/ mo</span>
+                        </div>
+                        <p class="text-[10px] font-mono text-primary mt-1 cycle-subtext">Standard monthly billing</p>
+                    </div>
+
+                    <ul class="space-y-3 border-t border-white/5 pt-6 text-xs text-on-surface-variant mb-8">
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span class="text-white"><strong>100</strong> Products Limit</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span><strong>5,000</strong> WhatsApp Msgs / mo</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-white/40">
+                            <span class="text-white/30 font-bold">✕</span>
+                            <span>Voice AI Agent (Chat Only)</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span>Visual Search (RAG)</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span>Human Handoff</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span>Standard KPIs & Dashboard</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span>Dedicated Support</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <a class="block text-center w-full bg-white/10 hover:bg-white/20 text-white font-bold py-3 text-xs uppercase tracking-widest rounded-xl transition-all"
+                   href="https://ai.omnilabsghana.tech">Get
+                    Starter</a>
+            </div>
+
+            <!-- Tier 2: Growth (Featured) -->
+            <div class="bg-surface-container-high p-7 rounded-3xl border-2 border-primary relative flex flex-col justify-between shadow-[0_0_35px_rgba(129,192,144,0.15)] fade-in-on-scroll">
+                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-primary text-black font-mono font-extrabold text-[10px] uppercase px-3 py-0.5 rounded-full tracking-wider shadow-md">
+                    MOST POPULAR
+                </div>
+
+                <div>
+                    <div class="flex justify-between items-center mb-4 pt-1">
+                        <span class="text-xs font-mono font-bold text-primary uppercase tracking-wider">Growth</span>
+                        <span class="text-[10px] bg-primary/20 text-primary border border-primary/30 px-2 py-0.5 rounded-full font-bold">Scaling</span>
+                    </div>
+                    <p class="text-xs text-on-surface-variant mb-6 leading-relaxed">Scaling shops & growing digital
+                        brands</p>
+
+                    <div class="mb-6">
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-xs font-bold text-primary">GHS</span>
+                            <span class="text-3xl font-extrabold text-white font-mono price-display" data-annual="9,590"
+                                  data-biannual="5,395" data-monthly="999">999</span>
+                            <span class="text-xs text-on-surface-variant cycle-label">/ mo</span>
+                        </div>
+                        <p class="text-[10px] font-mono text-primary mt-1 cycle-subtext">Standard monthly billing</p>
+                    </div>
+
+                    <ul class="space-y-3 border-t border-outline pt-6 text-xs text-on-surface-variant mb-8">
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span class="text-white"><strong>500</strong> Products Limit</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span class="text-primary font-bold">Unlimited WhatsApp Msgs</span>
+                        </li>
+                        <li class="flex items-center gap-2 text-white/40">
+                            <span class="text-white/30 font-bold">✕</span>
+                            <span>Voice AI Agent (Chat Only)</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span>Visual Search (RAG)</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span>Human Handoff</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span>Advanced & AI Forecasts</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span class="text-white">Priority 24/7 Support</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <a class="block text-center w-full bg-primary hover:bg-[#6fae7e] text-black font-extrabold py-3 text-xs uppercase tracking-widest rounded-pill shadow-[0_0_20px_rgba(129,192,144,0.3)] hover:shadow-[0_0_40px_rgba(129,192,144,0.6)] hover:scale-105 transition-all duration-300 active:scale-95 no-underline"
+                   href="https://ai.omnilabsghana.tech">Start
+                    Growth</a>
+            </div>
+
+            <!-- Tier 3: Pro (Voice AI Included) -->
+            <div class="bg-surface-container hover:bg-surface-container-high p-7 rounded-3xl border border-outline flex flex-col justify-between transition-all duration-300 hover:border-white/20 fade-in-on-scroll">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-mono font-bold text-white/60 uppercase tracking-wider">Pro</span>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold">Voice AI</span>
+                    </div>
+                    <p class="text-xs text-on-surface-variant mb-6 leading-relaxed">High-volume merchants needing AI
+                        Voice</p>
+
+                    <div class="mb-6">
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-xs font-bold text-primary">GHS</span>
+                            <span class="text-3xl font-extrabold text-white font-mono price-display"
+                                  data-annual="23,988" data-biannual="11,994" data-monthly="1,999">1,999</span>
+                            <span class="text-xs text-on-surface-variant cycle-label">/ mo</span>
+                        </div>
+                        <p class="text-[10px] font-mono text-primary mt-1 cycle-subtext">Standard monthly billing</p>
+                    </div>
+
+                    <ul class="space-y-3 border-t border-white/5 pt-6 text-xs text-on-surface-variant mb-8">
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span class="text-white"><strong>500</strong> Products Limit</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span class="text-primary font-bold">Unlimited WhatsApp Msgs</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-emerald-400 font-bold">✓</span>
+                            <span class="text-emerald-400 font-bold">LiveKit Voice AI Agent</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span>Visual Search (RAG)</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span>Human Handoff</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span>Advanced + Voice Insights</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span>Priority 24/7 Support</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <a class="block text-center w-full bg-white/10 hover:bg-white/20 text-white font-bold py-3 text-xs uppercase tracking-widest rounded-xl transition-all"
+                   href="https://ai.omnilabsghana.tech">Get
+                    Pro</a>
+            </div>
+
+            <!-- Tier 4: Elite -->
+            <div class="bg-surface-container hover:bg-surface-container-high p-7 rounded-3xl border border-outline flex flex-col justify-between transition-all duration-300 hover:border-white/20 fade-in-on-scroll">
+                <div>
+                    <div class="flex justify-between items-center mb-4">
+                        <span class="text-xs font-mono font-bold text-white/60 uppercase tracking-wider">Elite</span>
+                        <span class="text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full font-bold">Max Volume</span>
+                    </div>
+                    <p class="text-xs text-on-surface-variant mb-6 leading-relaxed">Enterprise-scale operations & max
+                        volume</p>
+
+                    <div class="mb-6">
+                        <div class="flex items-baseline gap-1">
+                            <span class="text-xs font-bold text-primary">GHS</span>
+                            <span class="text-3xl font-extrabold text-white font-mono price-display"
+                                  data-annual="28,790" data-biannual="16,195" data-monthly="2,999">2,999</span>
+                            <span class="text-xs text-on-surface-variant cycle-label">/ mo</span>
+                        </div>
+                        <p class="text-[10px] font-mono text-primary mt-1 cycle-subtext">Standard monthly billing</p>
+                    </div>
+
+                    <ul class="space-y-3 border-t border-white/5 pt-6 text-xs text-on-surface-variant mb-8">
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span class="text-white"><strong>800</strong> Products Limit</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span class="text-primary font-bold">Unlimited WhatsApp Msgs</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-amber-300 font-bold">✓</span>
+                            <span class="text-amber-300 font-bold">Max Voice & Chat AI Limits</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span>Visual Search (RAG)</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span>Priority Handoff</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span>Custom Enterprise Analytics</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-primary font-bold">✓</span>
+                            <span>Dedicated Success Manager</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <a class="block text-center w-full bg-white/10 hover:bg-white/20 text-white font-bold py-3 text-xs uppercase tracking-widest rounded-xl transition-all"
+                   href="https://ai.omnilabsghana.tech">Get
+                    Elite</a>
+            </div>
+
+        </div>
+
+        <!-- Enterprise Custom Callout Banner -->
+        <div class="mt-12 bg-gradient-to-r from-[#141414] via-[#1a231d] to-[#141414] p-8 rounded-3xl border border-primary/30 flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left fade-in-on-scroll">
+            <div class="space-y-2">
+                <div class="inline-flex items-center gap-2 text-primary font-mono text-xs font-bold uppercase">
+                    <span>⚡ Enterprise / Custom Solutions</span>
+                </div>
+                <h3 class="text-xl font-bold text-white">Need Custom ERP/Database Integration or Multi-Store Setup?</h3>
+                <p class="text-on-surface-variant text-sm max-w-2xl">
+                    Custom LLM fine-tuning on proprietary brand documentation, multi-store location routing, custom
+                    ERP/SQL database connectors, and dedicated infrastructure.
+                </p>
+            </div>
+            <a class="shrink-0 bg-primary hover:bg-[#6fae7e] text-black font-extrabold text-xs px-6 py-3.5 rounded-full uppercase tracking-wider transition-all whitespace-nowrap shadow-lg"
+               href="https://ai.omnilabsghana.tech">
+                Contact Sales
+            </a>
+        </div>
+
+    </section>
+
+    <!-- Final Sales Agent CTA Section -->
+    <section
+            class="py-24 md:py-28 bg-cover bg-center bg-no-repeat bg-scroll md:bg-fixed relative overflow-hidden border-t border-white/5"
+            id="talk-to-sales" style="background-image: url('images/cta-bg.jpg');">
+        <!-- Dark overlay to ensure text readability -->
+        <div class="absolute inset-0 bg-black/70 pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-4xl mx-auto px-6 sm:px-8 text-center space-y-10 fade-in-on-scroll">
+
+            <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs font-mono font-bold uppercase tracking-widest">
+                <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                <span>LIVE SALES AGENT READY</span>
+            </div>
+
+            <div class="space-y-4">
+                <h2 class="font-h1 text-4xl sm:text-5xl md:text-6xl font-extrabold text-white tracking-tight">
+                    Ready to automate your growth?
+                </h2>
+                <p class="font-body-main text-on-surface-variant text-lg sm:text-xl max-w-2xl mx-auto leading-relaxed">
+                    Experience the future of AI sales. Speak directly with our AI sales agent on WhatsApp or take an
+                    instant live phone call test now.
+                </p>
+            </div>
+
+            <!-- Main CTA Action Buttons with 2 Contact Options -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 pt-4">
+
+                <!-- WhatsApp Sales Chat Action Button (+233 243098134) -->
+                <a class="w-full sm:w-auto bg-[#25D366] hover:bg-[#20bd5a] text-black font-extrabold text-sm sm:text-base px-8 py-4 rounded-full flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(37,211,102,0.4)] hover:shadow-[0_0_40px_rgba(37,211,102,0.6)] hover:scale-105 transition-all duration-300 no-underline group"
+                   href="https://wa.me/233243098134?text=Hi%20OmniLabs!%20I'm%20interested%20in%20automating%20my%20business." rel="noopener noreferrer"
+                   target="_blank">
+                    <i class="w-5 h-5 fill-black" data-lucide="message-square"></i>
+                    <span>Talk to our Sales Agent on WhatsApp</span>
+                </a>
+
+                <!-- Direct Voice Phone Call Action Button (+1 4842950411) -->
+                <a class="w-full sm:w-auto bg-primary hover:bg-[#6fae7e] text-black font-extrabold text-sm sm:text-base px-8 py-4 rounded-full flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(129,192,144,0.4)] hover:shadow-[0_0_40px_rgba(129,192,144,0.6)] hover:scale-105 transition-all duration-300 no-underline"
+                   href="tel:+14842950411">
+                    <i class="w-5 h-5" data-lucide="phone-call"></i>
+                    <span>Call Live AI Agent</span>
+                </a>
+
+            </div>
+
+            <!-- Numbers Quick Reference Bar -->
+            <div class="pt-6 flex flex-wrap items-center justify-center gap-6 sm:gap-10 text-xs font-mono text-on-surface-variant">
+                <a class="flex items-center gap-2 hover:text-[#25D366] transition-colors" href="https://wa.me/233243098134"
+                   target="_blank">
+                    <span class="w-2 h-2 rounded-full bg-[#25D366]"></span>
+                    <span>WhatsApp: <strong class="text-white">+233 243098134</strong></span>
+                </a>
+                <a class="flex items-center gap-2 hover:text-primary transition-colors" href="tel:+14842950411">
+                    <span class="w-2 h-2 rounded-full bg-primary"></span>
+                    <span>Phone: <strong class="text-white">+1 4842950411</strong></span>
+                </a>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<!-- Footer -->
+<footer class="bg-[#0D0D0D] border-t border-outline w-full py-16">
+    <div class="max-w-7xl mx-auto px-8">
+        <div class="grid md:grid-cols-4 gap-12 mb-12">
+            <!-- Brand -->
+            <div class="col-span-2">
+                <div class="flex items-center gap-3 mb-6">
+                    <img alt="OmniLabs Logo" class="h-8 w-8"
+                         src="media/omni%20face_upscayl_5x_upscayl-standard-4x.png">
+                    <span class="text-xl font-bold text-white font-h1">OmniLabs</span>
+                </div>
+                <p class="text-on-surface-variant text-sm max-w-sm mb-6">OmniLabs AI Solutions is a Ghanaian
+                    technology startup building AI-powered business automation tools for small and medium
+                    enterprises (SMEs).</p>
+                <div class="flex gap-4">
+                    <a class="w-8 h-8 rounded-full border border-outline flex items-center justify-center hover:bg-white/10 transition-all text-on-surface-variant hover:text-primary"
+                       href="#">𝕏</a>
+                    <a class="w-8 h-8 rounded-full border border-outline flex items-center justify-center hover:bg-white/10 transition-all text-on-surface-variant hover:text-primary"
+                       href="#">in</a>
+                    <a class="w-8 h-8 rounded-full border border-outline flex items-center justify-center hover:bg-white/10 transition-all text-on-surface-variant hover:text-primary"
+                       href="#">ig</a>
+                </div>
+            </div>
+
+            <!-- Contact -->
+            <div>
+                <h4 class="font-h1 text-white mb-6 uppercase tracking-widest text-xs">Contact Us</h4>
+                <ul class="space-y-4 text-sm text-on-surface-variant">
+                    <li class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm text-primary">mail</span>
+                        <a class="hover:text-primary transition-colors"
+                           href="mailto:hi@omnilabsghana.tech">hi@omnilabsghana.tech</a>
+                    </li>
+                    <li class="flex items-center gap-2">
+                        <span class="material-symbols-outlined text-sm text-primary">call</span>
+                        <a class="hover:text-primary transition-colors" href="tel:+233264022355">0264022355</a>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="material-symbols-outlined text-sm text-primary">location_on</span>
+                        <span>Accra, Ghana</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Links -->
+            <div>
+                <h4 class="font-h1 text-white mb-6 uppercase tracking-widest text-xs">Company</h4>
+                <ul class="space-y-4 text-sm text-on-surface-variant">
+                    <li><a class="hover:text-primary transition-colors" href="/about">About Us</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="/privacy">Privacy Policy</a></li>
+                    <li><a class="hover:text-primary transition-colors" href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pt-8 border-t border-outline flex flex-col md:flex-row justify-between items-center gap-4">
+            <p class="font-mono text-[10px] text-on-surface-variant/40 uppercase tracking-widest">© 2026 OmniLabs AI
+                Solutions. Made with ❤️ in Ghana</p>
+            <p class="font-mono text-[10px] text-on-surface-variant/20 uppercase tracking-widest">Synthetic Horizon
+                v1.0</p>
+        </div>
+    </div>
+</footer>
+
+<!-- Omni Hero Footer Section -->
+<section
+        class="relative bg-cover bg-center md:bg-[center_25%] bg-no-repeat bg-scroll md:bg-fixed overflow-hidden min-h-[400px] md:min-h-[500px] flex items-center justify-center"
+        style="background-image: url('images/omni-robot-bg.jpg');">
+    <!-- Optional overlay to make text pop and hide any baked-in text -->
+    <div class="absolute inset-0 bg-black/10"></div>
+    <h1 class="text-[7rem] sm:text-[10rem] md:text-[18rem] lg:text-[24rem] font-bold text-white tracking-tighter leading-none z-10 font-h1 drop-shadow-lg">
+        Omni
+    </h1>
+</section>
+
+<script>
+    // Initialize Lucide Icons
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+
+    // Scroll Spy & Shrinking Navbar Glass Journey Logic
+    const navWrapper = document.getElementById('nav-wrapper');
+    const navJourneyLinks = document.querySelectorAll('.nav-journey-link');
+    const sections = document.querySelectorAll('section[id]');
+
+    window.addEventListener('scroll', () => {
+        const winScroll = window.scrollY || document.documentElement.scrollTop;
+
+        // 1. Shrink nav to middle glass container on scroll
+        if (winScroll > 60) {
+            navWrapper?.classList.add('scrolled');
+        } else {
+            navWrapper?.classList.remove('scrolled');
         }
 
-        mobileMenuBtn?.addEventListener('click', toggleMenu);
-        closeMenuBtn?.addEventListener('click', toggleMenu);
-        mobileNavLinks.forEach(link => link.addEventListener('click', toggleMenu));
+        // 2. Scroll-Spy (Highlight section journey pill)
+        let current = 'home';
+        sections.forEach((section) => {
+            const sectionTop = section.offsetTop - 180;
+            if (winScroll >= sectionTop) {
+                current = section.getAttribute('id');
+            }
+        });
 
-        // Scroll Animations
-        const observerOptions = { threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
+        navJourneyLinks.forEach((link) => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === `#${current}`) {
+                link.classList.add('active');
+            }
+        });
+    });
+
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const closeMenuBtn = document.getElementById('close-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+    function toggleMenu() {
+        mobileMenu.classList.toggle('translate-x-full');
+        document.body.style.overflow = mobileMenu.classList.contains('translate-x-full') ? '' : 'hidden';
+    }
+
+    mobileMenuBtn?.addEventListener('click', toggleMenu);
+    closeMenuBtn?.addEventListener('click', toggleMenu);
+    mobileNavLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+    // Scroll Animations (IntersectionObserver)
+    const observerOptions = {threshold: 0.1};
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in-on-scroll').forEach(el => observer.observe(el));
+
+    // Flashing Text Animation
+    const flashingText = document.getElementById('flashing-text');
+    const textOptions = ['slow replies', 'unanswered DMs', 'after hours calls'];
+    let currentIndex = 0;
+
+    setInterval(() => {
+        currentIndex = (currentIndex + 1) % textOptions.length;
+        flashingText.style.opacity = '0';
+        setTimeout(() => {
+            flashingText.textContent = textOptions[currentIndex];
+            flashingText.style.opacity = '1';
+        }, 150);
+    }, 1500);
+
+    // Interactive Workflow Tab Slider (Train, Deploy, Analyze)
+    const tabBtns = document.querySelectorAll('.workflow-tab-btn');
+    const tabContents = document.querySelectorAll('.workflow-tab-content');
+    const workflowHeadline = document.getElementById('workflow-headline');
+    const mockupUrl = document.getElementById('mockup-url');
+    const playPauseBtn = document.getElementById('tab-play-pause');
+
+    const tabHeadlines = {
+        train: "Define AI persona, behavior, and upload custom knowledge documents",
+        deploy: "Deploy instantly across WhatsApp, phone calls, and web chat",
+        analyze: "Track real-time metrics, cost, channel performance, trends, and customer insights"
+    };
+
+    const tabUrls = {
+        train: "app.omnilabsghana.tech/settings • AI & Knowledge",
+        deploy: "app.omnilabsghana.tech/dashboard • Deploy Gateway",
+        analyze: "app.omnilabsghana.tech/dashboard • Analytics"
+    };
+
+    const tabsList = ['train', 'deploy', 'analyze'];
+    let activeTabIndex = 2; // Default 'analyze'
+    let isPlaying = true;
+    let tabInterval = null;
+
+    function switchTab(targetKey) {
+        tabBtns.forEach(btn => {
+            if (btn.getAttribute('data-target') === targetKey) {
+                btn.classList.add('active', 'bg-primary/20', 'text-primary', 'border', 'border-primary/40', 'shadow-[0_0_15px_rgba(129,192,144,0.2)]');
+                btn.classList.remove('text-on-surface-variant');
+            } else {
+                btn.classList.remove('active', 'bg-primary/20', 'text-primary', 'border', 'border-primary/40', 'shadow-[0_0_15px_rgba(129,192,144,0.2)]');
+                btn.classList.add('text-on-surface-variant');
+            }
+        });
+
+        tabContents.forEach(content => {
+            if (content.id === `tab-content-${targetKey}`) {
+                content.classList.remove('hidden');
+            } else {
+                content.classList.add('hidden');
+            }
+        });
+
+        if (workflowHeadline && tabHeadlines[targetKey]) {
+            workflowHeadline.style.opacity = '0';
+            setTimeout(() => {
+                workflowHeadline.textContent = tabHeadlines[targetKey];
+                workflowHeadline.style.opacity = '1';
+            }, 150);
+        }
+
+        if (mockupUrl && tabUrls[targetKey]) {
+            mockupUrl.textContent = tabUrls[targetKey];
+        }
+    }
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const target = btn.getAttribute('data-target');
+            activeTabIndex = tabsList.indexOf(target);
+            switchTab(target);
+        });
+    });
+
+    function startAutoSlider() {
+        tabInterval = setInterval(() => {
+            activeTabIndex = (activeTabIndex + 1) % tabsList.length;
+            switchTab(tabsList[activeTabIndex]);
+        }, 4000);
+    }
+
+    if (isPlaying) {
+        startAutoSlider();
+    }
+
+    playPauseBtn?.addEventListener('click', () => {
+        isPlaying = !isPlaying;
+        if (isPlaying) {
+            playPauseBtn.innerHTML = '<i data-lucide="pause" class="w-3.5 h-3.5"></i>';
+            startAutoSlider();
+        } else {
+            playPauseBtn.innerHTML = '<i data-lucide="play" class="w-3.5 h-3.5"></i>';
+            clearInterval(tabInterval);
+        }
+        if (window.lucide) lucide.createIcons();
+    });
+
+    // Scroll-Driven 3D Curved Gallery Carousel Rotation
+    const galleryTrack = document.getElementById('curved-gallery-track');
+    const galleryCards = document.querySelectorAll('.gallery-card');
+    const showcaseSection = document.getElementById('showcase');
+
+    function updateGalleryRotation() {
+        if (!showcaseSection || !galleryTrack) return;
+
+        const sectionRect = showcaseSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // Calculate scroll progress through section (from 0 to 1)
+        const scrollProgress = Math.min(Math.max((windowHeight - sectionRect.top) / (windowHeight + sectionRect.height), 0), 1);
+
+        // Map scroll progress to horizontal translation shift (-300px to +300px)
+        const translateX = (scrollProgress - 0.5) * -600;
+        galleryTrack.style.transform = `translateX(${translateX}px)`;
+
+        // Calculate 3D perspective rotation for each card relative to screen center
+        galleryCards.forEach((card, index) => {
+            const cardRect = card.getBoundingClientRect();
+            const cardCenter = cardRect.left + cardRect.width / 2;
+            const screenCenter = window.innerWidth / 2;
+
+            // Normalized distance from center (-1 to 1)
+            const distFromCenter = (cardCenter - screenCenter) / (window.innerWidth / 2);
+
+            // Dynamic 3D Y-axis rotation (up to 30 degrees curve towards center)
+            const rotateY = distFromCenter * -28;
+            const scale = Math.max(1 - Math.abs(distFromCenter) * 0.22, 0.75);
+            const opacity = Math.max(1 - Math.abs(distFromCenter) * 0.35, 0.45);
+
+            card.style.transform = `rotateY(${rotateY}deg) scale(${scale})`;
+            card.style.opacity = opacity.toString();
+
+            if (Math.abs(distFromCenter) < 0.25) {
+                card.style.zIndex = '30';
+                card.classList.add('border-primary', 'shadow-[0_0_30px_rgba(129,192,144,0.35)]');
+                card.classList.remove('border-outline');
+            } else {
+                card.style.zIndex = '10';
+                card.classList.remove('border-primary', 'shadow-[0_0_30px_rgba(129,192,144,0.35)]');
+                card.classList.add('border-outline');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', updateGalleryRotation);
+    window.addEventListener('resize', updateGalleryRotation);
+    updateGalleryRotation();
+
+    // Billing Cycle Switcher (Monthly / Bi-Annual / Annual)
+    const cycleBtns = document.querySelectorAll('.billing-cycle-btn');
+    const priceDisplays = document.querySelectorAll('.price-display');
+    const cycleLabels = document.querySelectorAll('.cycle-label');
+    const cycleSubtexts = document.querySelectorAll('.cycle-subtext');
+
+    cycleBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const cycle = btn.getAttribute('data-cycle');
+
+            cycleBtns.forEach(b => {
+                b.classList.remove('bg-primary', 'text-black');
+                b.classList.add('text-on-surface-variant');
             });
-        }, observerOptions);
+            btn.classList.add('bg-primary', 'text-black');
+            btn.classList.remove('text-on-surface-variant');
 
-        document.querySelectorAll('.fade-in-on-scroll').forEach(el => observer.observe(el));
+            priceDisplays.forEach(el => {
+                const price = el.getAttribute(`data-${cycle}`);
+                if (price) el.textContent = price;
+            });
 
-        // Pricing Currency Detection
-        fetch('https://get.geojs.io/v1/ip/country.json')
-            .then(response => response.json())
-            .then(data => {
-                if (data.country !== 'GH') {
-                    document.querySelectorAll('.currency-symbol').forEach(el => el.textContent = '$');
-                    document.querySelectorAll('.price-amount').forEach(el => {
-                        const usdPrice = el.getAttribute('data-usd');
-                        if (usdPrice) el.textContent = usdPrice;
+            cycleLabels.forEach(el => {
+                if (cycle === 'monthly') el.textContent = '/ mo';
+                if (cycle === 'biannual') el.textContent = '/ 6 mos';
+                if (cycle === 'annual') el.textContent = '/ yr';
+            });
+
+            cycleSubtexts.forEach(el => {
+                if (cycle === 'monthly') el.textContent = 'Standard monthly billing';
+                if (cycle === 'biannual') el.textContent = 'Billed bi-annually (6 months)';
+                if (cycle === 'annual') el.textContent = 'Billed annually (12 months)';
+            });
+        });
+    });
+
+    // Pricing Currency Detection
+    fetch('https://get.geojs.io/v1/ip/country.json')
+        .then(response => response.json())
+        .then(data => {
+            if (data.country === 'GH') {
+                document.querySelectorAll('.currency-symbol').forEach(el => el.textContent = 'GHS ');
+                document.querySelectorAll('.price-amount').forEach(el => {
+                    const ghsPrice = el.getAttribute('data-ghs');
+                    if (ghsPrice) el.textContent = ghsPrice;
+                });
+            }
+        })
+        .catch(error => console.warn('Location detection failed.', error));
+</script>
+
+<!-- Advanced Telegram Visitor Notification Script (Works on Local) -->
+<script>
+    (function () {
+        // --- CONFIGURATION ---
+        const botToken = '8586545446:AAGJ6xthEcPf1VPUiDB25WFbi8VuOrUmN80';
+        const chatId = '-5464645199';
+        // ---------------------
+
+        // Check if we already notified during this browsing session
+        const alreadyNotified = sessionStorage.getItem('notified_visit');
+
+        if (!alreadyNotified) {
+
+            // Gather built-in browser data
+            const referrer = document.referrer ? new URL(document.referrer).hostname : 'Direct / Bookmark / Local';
+            const screen = `${window.screen.width}x${window.screen.height}`;
+            const language = navigator.language;
+            const time = new Date().toLocaleTimeString();
+            
+            // Detect Browser
+            const ua = navigator.userAgent;
+            let browser = "Unknown Browser";
+            if (ua.includes("Firefox")) browser = "Firefox";
+            else if (ua.includes("Edg")) browser = "Edge";
+            else if (ua.includes("Chrome")) browser = "Chrome";
+            else if (ua.includes("Safari") && !ua.includes("Chrome")) browser = "Safari";
+            else if (ua.includes("Opera") || ua.includes("OPR")) browser = "Opera";
+
+            // Fetch the visitor's Location based on their IP
+            fetch('https://get.geojs.io/v1/ip/geo.json')
+                .then(response => response.json())
+                .catch(() => ({ city: 'Unknown', country: '(Blocked by Privacy Settings)' }))
+                .then(geoData => {
+
+                    // Format the beautiful Telegram message
+                    const message = `🎉 *New Visitor on OmniLabs!*
+
+🌍 *Location:* ${geoData.city || 'Unknown'}, ${geoData.country || 'Unknown'}
+🔗 *Source:* ${referrer}
+💻 *Screen:* ${screen}
+🧭 *Browser:* ${browser}
+🌐 *Language:* ${language}
+⏰ *Local Time:* ${time}`;
+
+                    // Send to Telegram
+                    return fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            chat_id: chatId,
+                            text: message,
+                            parse_mode: 'Markdown'
+                        })
                     });
-                }
-            })
-            .catch(error => console.warn('Location detection failed.', error));
-    </script>
+                })
+                .then(response => {
+                    if (response && response.ok) {
+                        // Prevents spam on refresh
+                        sessionStorage.setItem('notified_visit', 'true');
+                    } else {
+                        console.error("Telegram API Error. Check Chat ID/Token.");
+                    }
+                })
+                .catch(err => console.error("Notification failed", err));
+        }
+    })();
+</script>
 </body>
 
 </html>
+
