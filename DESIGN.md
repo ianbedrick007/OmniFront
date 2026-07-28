@@ -21,7 +21,7 @@ design:
         glass-border: "rgba(255, 255, 255, 0.12)"
     typography:
       family:
-        heading: "'Outfit', sans-serif"
+        heading: "'Inter', sans-serif"
         body: "'Inter', sans-serif"
         mono: "'Space Mono', monospace"
       weight:
