@@ -412,10 +412,10 @@
                 </div>
 
                 <!-- Mockup Tab Panels Container -->
-                <div class="p-6 sm:p-8 min-h-[500px]">
+                <div class="p-6 sm:p-8 grid relative">
 
                     <!-- 1. TRAIN TAB CONTENT (SETTINGS UI MATCHING SCREENSHOT) -->
-                    <div class="workflow-tab-content hidden space-y-6" id="tab-content-train">
+                    <div class="workflow-tab-content space-y-6 col-start-1 row-start-1 opacity-0 pointer-events-none z-0 transition-opacity duration-500" id="tab-content-train">
 
                         <!-- Settings Header & Tab Bar -->
                         <div class="flex flex-wrap items-center justify-between gap-4 border-b border-outline pb-4">
@@ -540,7 +540,7 @@
                     </div>
 
                     <!-- 3. DEPLOY TAB CONTENT -->
-                    <div class="workflow-tab-content hidden space-y-6" id="tab-content-deploy">
+                    <div class="workflow-tab-content space-y-6 col-start-1 row-start-1 opacity-0 pointer-events-none z-0 transition-opacity duration-500" id="tab-content-deploy">
                         <div class="flex flex-wrap items-center justify-between border-b border-outline pb-4 gap-4">
                             <div>
                                 <h3 class="text-xl font-bold text-white">Multi-Channel Deployment</h3>
@@ -581,7 +581,7 @@
                     </div>
 
                     <!-- 3. ANALYZE TAB CONTENT (EXACT MATCHING ANALYTICS DASHBOARD SCREENSHOT) -->
-                    <div class="workflow-tab-content space-y-6" id="tab-content-analyze">
+                    <div class="workflow-tab-content space-y-6 col-start-1 row-start-1 opacity-100 pointer-events-auto z-10 transition-opacity duration-500" id="tab-content-analyze">
 
                         <!-- Top Metric Cards Row (4 Columns) -->
                         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -1772,9 +1772,11 @@
 
         tabContents.forEach(content => {
             if (content.id === `tab-content-${targetKey}`) {
-                content.classList.remove('hidden');
+                content.classList.remove('opacity-0', 'pointer-events-none', 'z-0');
+                content.classList.add('opacity-100', 'pointer-events-auto', 'z-10');
             } else {
-                content.classList.add('hidden');
+                content.classList.remove('opacity-100', 'pointer-events-auto', 'z-10');
+                content.classList.add('opacity-0', 'pointer-events-none', 'z-0');
             }
         });
 
